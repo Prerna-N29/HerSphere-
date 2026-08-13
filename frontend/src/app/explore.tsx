@@ -1,180 +1,325 @@
-import { Image } from 'expo-image';
-import { SymbolView } from 'expo-symbols';
-import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
 
-import { ExternalLink } from '@/components/external-link';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
-
-export default function TabTwoScreen() {
-  const safeAreaInsets = useSafeAreaInsets();
-  const insets = {
-    ...safeAreaInsets,
-    bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
-  };
-  const theme = useTheme();
-
-  const contentPlatformStyle = Platform.select({
-    android: {
-      paddingTop: insets.top,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-      paddingBottom: insets.bottom,
-    },
-    web: {
-      paddingTop: Spacing.six,
-      paddingBottom: Spacing.four,
-    },
-  });
-
+export default function HomeScreen() {
   return (
-    <ScrollView
-      style={[styles.scrollView, { backgroundColor: theme.background }]}
-      contentInset={insets}
-      contentContainerStyle={[styles.contentContainer, contentPlatformStyle]}>
-      <ThemedView style={styles.container}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="subtitle">Explore</ThemedText>
-          <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This starter app includes example{'\n'}code to help you get started.
-          </ThemedText>
+    <ScrollView style={styles.container}>
+      <View style={styles.content}>
 
-          <ExternalLink href="https://docs.expo.dev" asChild>
-            <Pressable style={({ pressed }) => pressed && styles.pressed}>
-              <ThemedView type="backgroundElement" style={styles.linkButton}>
-                <ThemedText type="link">Expo documentation</ThemedText>
-                <SymbolView
-                  tintColor={theme.text}
-                  name={{ ios: 'arrow.up.right.square', android: 'link', web: 'link' }}
-                  size={12}
-                />
-              </ThemedView>
+        {/* Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.greeting}>Good morning 🌸</Text>
+            <Text style={styles.title}>Welcome to HerSphere</Text>
+          </View>
+
+          <View style={styles.profileCircle}>
+            <Text style={styles.profileEmoji}>🌷</Text>
+          </View>
+        </View>
+
+        {/* Wellness Check */}
+        <View style={styles.wellnessCard}>
+          <Text style={styles.cardTitle}>
+            How are you feeling today?
+          </Text>
+
+          <Text style={styles.cardDescription}>
+            Take a moment to check in with yourself.
+          </Text>
+
+          <View style={styles.moodRow}>
+            <Pressable style={styles.moodButton}>
+              <Text style={styles.moodEmoji}>😊</Text>
+              <Text style={styles.moodText}>Great</Text>
             </Pressable>
-          </ExternalLink>
-        </ThemedView>
 
-        <ThemedView style={styles.sectionsWrapper}>
-          <Collapsible title="File-based routing">
-            <ThemedText type="small">
-              This app has two screens: <ThemedText type="code">src/app/index.tsx</ThemedText> and{' '}
-              <ThemedText type="code">src/app/explore.tsx</ThemedText>
-            </ThemedText>
-            <ThemedText type="small">
-              The layout file in <ThemedText type="code">src/app/_layout.tsx</ThemedText> sets up
-              the tab navigator.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/router/introduction">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+            <Pressable style={styles.moodButton}>
+              <Text style={styles.moodEmoji}>😐</Text>
+              <Text style={styles.moodText}>Okay</Text>
+            </Pressable>
 
-          <Collapsible title="Android, iOS, and web support">
-            <ThemedView type="backgroundElement" style={styles.collapsibleContent}>
-              <ThemedText type="small">
-                You can open this project on Android, iOS, and the web. To open the web version,
-                press <ThemedText type="smallBold">w</ThemedText> in the terminal running this
-                project.
-              </ThemedText>
-              <Image
-                source={require('@/assets/images/tutorial-web.png')}
-                style={styles.imageTutorial}
-              />
-            </ThemedView>
-          </Collapsible>
+            <Pressable style={styles.moodButton}>
+              <Text style={styles.moodEmoji}>😔</Text>
+              <Text style={styles.moodText}>Low</Text>
+            </Pressable>
+          </View>
+        </View>
 
-          <Collapsible title="Images">
-            <ThemedText type="small">
-              For static images, you can use the <ThemedText type="code">@2x</ThemedText> and{' '}
-              <ThemedText type="code">@3x</ThemedText> suffixes to provide files for different
-              screen densities.
-            </ThemedText>
-            <Image source={require('@/assets/images/react-logo.png')} style={styles.imageReact} />
-            <ExternalLink href="https://reactnative.dev/docs/images">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+        {/* Main Features */}
+        <Text style={styles.sectionTitle}>
+          Your Wellness Space
+        </Text>
 
-          <Collapsible title="Light and dark mode components">
-            <ThemedText type="small">
-              This template has light and dark mode support. The{' '}
-              <ThemedText type="code">useColorScheme()</ThemedText> hook lets you inspect what the
-              user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-            </ThemedText>
-            <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-              <ThemedText type="linkPrimary">Learn more</ThemedText>
-            </ExternalLink>
-          </Collapsible>
+        <View style={styles.featureGrid}>
 
-          <Collapsible title="Animations">
-            <ThemedText type="small">
-              This template includes an example of an animated component. The{' '}
-              <ThemedText type="code">src/components/ui/collapsible.tsx</ThemedText> component uses
-              the powerful <ThemedText type="code">react-native-reanimated</ThemedText> library to
-              animate opening this hint.
-            </ThemedText>
-          </Collapsible>
-        </ThemedView>
-        {Platform.OS === 'web' && <WebBadge />}
-      </ThemedView>
+          <Pressable style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>🌸</Text>
+            <Text style={styles.featureTitle}>
+              Menstrual Health
+            </Text>
+            <Text style={styles.featureDescription}>
+              Track and understand your cycle
+            </Text>
+          </Pressable>
+
+          <Pressable style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>🥗</Text>
+            <Text style={styles.featureTitle}>
+              Smart Nutrition
+            </Text>
+            <Text style={styles.featureDescription}>
+              Personalized food guidance
+            </Text>
+          </Pressable>
+
+          <Pressable style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>💭</Text>
+            <Text style={styles.featureTitle}>
+              Well-being
+            </Text>
+            <Text style={styles.featureDescription}>
+              Support your emotional health
+            </Text>
+          </Pressable>
+
+          <Pressable style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>🤖</Text>
+            <Text style={styles.featureTitle}>
+              AI Health Buddy
+            </Text>
+            <Text style={styles.featureDescription}>
+              Ask questions in a safe space
+            </Text>
+          </Pressable>
+
+        </View>
+
+        {/* Additional Features */}
+        <Text style={styles.sectionTitle}>
+          Explore HerSphere
+        </Text>
+
+        <Pressable style={styles.wideCard}>
+          <Text style={styles.wideEmoji}>📚</Text>
+
+          <View style={styles.wideContent}>
+            <Text style={styles.wideTitle}>
+              Myth vs Fact
+            </Text>
+
+            <Text style={styles.wideDescription}>
+              Learn what is true and what isn't.
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>›</Text>
+        </Pressable>
+
+        <Pressable style={styles.wideCard}>
+          <Text style={styles.wideEmoji}>🩺</Text>
+
+          <View style={styles.wideContent}>
+            <Text style={styles.wideTitle}>
+              Doctor Visit Guidance
+            </Text>
+
+            <Text style={styles.wideDescription}>
+              Know when and how to seek professional help.
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>›</Text>
+        </Pressable>
+
+        <Pressable style={styles.wideCard}>
+          <Text style={styles.wideEmoji}>🌱</Text>
+
+          <View style={styles.wideContent}>
+            <Text style={styles.wideTitle}>
+              Sustainable Food
+            </Text>
+
+            <Text style={styles.wideDescription}>
+              Discover healthier and sustainable choices.
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>›</Text>
+        </Pressable>
+
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF7F8',
+  },
+
+  content: {
+    paddingHorizontal: 22,
+    paddingTop: 55,
+    paddingBottom: 40,
+    maxWidth: 700,
+    width: '100%',
+    alignSelf: 'center',
+  },
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  greeting: {
+    fontSize: 15,
+    color: '#C96F89',
+    fontWeight: '600',
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#7A4055',
+    marginTop: 5,
+  },
+
+  profileCircle: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#F8DDE5',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  profileEmoji: {
+    fontSize: 25,
+  },
+
+  wellnessCard: {
+    backgroundColor: '#F8DDE5',
+    borderRadius: 24,
+    padding: 22,
+    marginTop: 28,
+  },
+
+  cardTitle: {
+    fontSize: 19,
+    fontWeight: '700',
+    color: '#7A4055',
+  },
+
+  cardDescription: {
+    fontSize: 14,
+    color: '#8A747B',
+    marginTop: 6,
+  },
+
+  moodRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 18,
+  },
+
+  moodButton: {
+    flex: 1,
+    backgroundColor: '#FFF7F8',
+    borderRadius: 16,
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+
+  moodEmoji: {
+    fontSize: 25,
+  },
+
+  moodText: {
+    fontSize: 12,
+    color: '#7A4055',
+    marginTop: 4,
+  },
+
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#7A4055',
+    marginTop: 30,
+    marginBottom: 14,
+  },
+
+  featureGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+
+  featureCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 18,
+    width: '48%',
+    minHeight: 155,
+    borderWidth: 1,
+    borderColor: '#F3DDE3',
+  },
+
+  featureEmoji: {
+    fontSize: 30,
+    marginBottom: 12,
+  },
+
+  featureTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#7A4055',
+  },
+
+  featureDescription: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#8A747B',
+    marginTop: 6,
+  },
+
+  wideCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 17,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#F3DDE3',
+  },
+
+  wideEmoji: {
+    fontSize: 28,
+    marginRight: 15,
+  },
+
+  wideContent: {
     flex: 1,
   },
-  contentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+
+  wideTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#7A4055',
   },
-  container: {
-    maxWidth: MaxContentWidth,
-    flexGrow: 1,
+
+  wideDescription: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#8A747B',
+    marginTop: 3,
   },
-  titleContainer: {
-    gap: Spacing.three,
-    alignItems: 'center',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.six,
-  },
-  centerText: {
-    textAlign: 'center',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  linkButton: {
-    flexDirection: 'row',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.five,
-    justifyContent: 'center',
-    gap: Spacing.one,
-    alignItems: 'center',
-  },
-  sectionsWrapper: {
-    gap: Spacing.five,
-    paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.three,
-  },
-  collapsibleContent: {
-    alignItems: 'center',
-  },
-  imageTutorial: {
-    width: '100%',
-    aspectRatio: 296 / 171,
-    borderRadius: Spacing.three,
-    marginTop: Spacing.two,
-  },
-  imageReact: {
-    width: 100,
-    height: 100,
-    alignSelf: 'center',
+
+  arrow: {
+    fontSize: 27,
+    color: '#C96F89',
+    marginLeft: 8,
   },
 });
