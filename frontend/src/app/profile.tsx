@@ -1,34 +1,43 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 
-export default function OnboardingScreen() {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.step}>LET'S GET TO KNOW YOU</Text>
+      <Text style={styles.step}>A LITTLE ABOUT YOU</Text>
 
       <Text style={styles.title}>
-        Your health journey starts here 🌸
+        Let's personalize your HerSphere 🌷
       </Text>
 
       <Text style={styles.description}>
-        Tell us a little about yourself so HerSphere
-        can personalize your experience.
+        A few details will help us make your experience
+        more relevant to you.
       </Text>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>
-          What can HerSphere help with?
-        </Text>
+        <Text style={styles.cardTitle}>What would you like help with?</Text>
 
-        <Text style={styles.option}>🌸 Menstrual Health</Text>
-        <Text style={styles.option}>🥗 Nutrition</Text>
-        <Text style={styles.option}>💭 Emotional Well-being</Text>
-        <Text style={styles.option}>🤖 AI Health Buddy</Text>
+        <Pressable style={styles.option}>
+          <Text style={styles.optionText}>🌸 Menstrual Health</Text>
+        </Pressable>
+
+        <Pressable style={styles.option}>
+          <Text style={styles.optionText}>🥗 Nutrition & Food</Text>
+        </Pressable>
+
+        <Pressable style={styles.option}>
+          <Text style={styles.optionText}>💭 Emotional Well-being</Text>
+        </Pressable>
+
+        <Pressable style={styles.option}>
+          <Text style={styles.optionText}>🌱 Healthy Lifestyle</Text>
+        </Pressable>
       </View>
 
       <Pressable
         style={styles.button}
-        onPress={() => router.push('/profile')}
+        onPress={() => router.push('/explore')}
       >
         <Text style={styles.buttonText}>Continue</Text>
       </Pressable>
@@ -77,13 +86,20 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     color: '#7A4055',
-    marginBottom: 18,
+    marginBottom: 16,
   },
 
   option: {
-    fontSize: 16,
-    color: '#8A747B',
-    marginVertical: 9,
+    backgroundColor: '#FFF1F4',
+    paddingVertical: 15,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    marginVertical: 6,
+  },
+
+  optionText: {
+    fontSize: 15,
+    color: '#7A4055',
   },
 
   button: {
