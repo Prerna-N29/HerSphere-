@@ -98,7 +98,10 @@ export default function ExploreScreen() {
           </Pressable>
 
           {/* Emotional Well-being */}
-          <Pressable style={styles.featureCard}>
+          <Pressable
+  style={styles.featureCard}
+  onPress={() => router.push('/wellbeing')}
+>
             <View style={styles.iconCircle}>
               <Text style={styles.featureEmoji}>💭</Text>
             </View>
@@ -113,7 +116,10 @@ export default function ExploreScreen() {
           </Pressable>
 
           {/* AI Buddy */}
-          <Pressable style={styles.featureCard}>
+          <Pressable
+  style={styles.featureCard}
+  onPress={() => router.push('/ai-buddy')}
+>
             <View style={styles.iconCircle}>
               <Text style={styles.featureEmoji}>🤖</Text>
             </View>

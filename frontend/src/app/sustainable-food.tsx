@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 
-export default function NutritionScreen() {
+export default function SustainableFoodScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
@@ -21,144 +21,142 @@ export default function NutritionScreen() {
         </Pressable>
 
         {/* Header */}
-        <Text style={styles.emoji}>🥗</Text>
+        <Text style={styles.emoji}>🌱</Text>
 
         <Text style={styles.title}>
-          Smart Nutrition
+          Sustainable Food Choices
         </Text>
 
         <Text style={styles.subtitle}>
-          Nourish your body with balanced choices that
-          support your health and wellbeing.
+          Discover food choices that can support your
+          wellbeing while being kinder to the environment.
         </Text>
 
-        {/* Daily Nutrition */}
+        {/* Highlight */}
         <View style={styles.highlightCard}>
           <Text style={styles.highlightEmoji}>
-            🌷
+            🌍
           </Text>
 
           <Text style={styles.highlightTitle}>
-            Food is part of your wellbeing
+            Small choices can make a difference
           </Text>
 
           <Text style={styles.highlightText}>
-            Your nutritional needs can change throughout
-            different stages of life and your menstrual cycle.
-            Focus on balance, variety and nourishing foods.
+            Sustainable eating is not about following a
+            perfect diet. It is about making thoughtful
+            choices that work for your health, budget,
+            culture and environment.
           </Text>
         </View>
 
-        {/* Nutrition Areas */}
+        {/* Explore */}
         <Text style={styles.sectionTitle}>
-          Explore Nutrition
+          Simple Sustainable Choices
         </Text>
 
-        {/* Balanced Plate */}
-        <Pressable
-  style={styles.card}
-  onPress={() => router.push('/balanced-plate')}
->
-          <Text style={styles.cardEmoji}>
-            🍽️
-          </Text>
+        {/* Seasonal & Local */}
+        <View style={styles.card}>
+          <Text style={styles.cardEmoji}>🥕</Text>
 
           <View style={styles.cardContent}>
             <Text style={styles.cardTitle}>
-              Build a Balanced Plate
+              Choose seasonal & local foods
             </Text>
 
             <Text style={styles.cardText}>
-              Learn how to combine vegetables, proteins,
-              grains and healthy fats.
+              Seasonal fruits and vegetables can be a
+              fresh and practical choice. Local foods may
+              also reduce the distance food travels.
             </Text>
           </View>
+        </View>
 
-          <Text style={styles.arrow}>›</Text>
-        </Pressable>
-
-        {/* Cycle Nutrition */}
-        
-<Pressable
-  style={styles.card}
-  onPress={() => router.push('/cycle-nutrition')}
->
-          <Text style={styles.cardEmoji}>
-            🩸
-          </Text>
+        {/* Plant Protein */}
+        <View style={styles.card}>
+          <Text style={styles.cardEmoji}>🫘</Text>
 
           <View style={styles.cardContent}>
             <Text style={styles.cardTitle}>
-              Nutrition During Your Cycle
+              Include plant-based proteins
             </Text>
 
             <Text style={styles.cardText}>
-              Discover foods and nutrients that may support
-              you during different cycle phases.
+              Pulses, beans, lentils, peas, nuts and seeds
+              can provide useful sources of protein and
+              other nutrients.
             </Text>
           </View>
+        </View>
 
-          <Text style={styles.arrow}>›</Text>
-        </Pressable>
-
-        {/* Hydration */}
-        {/* Hydration */}
-<Pressable
-  style={styles.card}
-  onPress={() => router.push('/hydration')}
->
-  <Text style={styles.cardEmoji}>
-    💧
-  </Text>
-
-  <View style={styles.cardContent}>
-    <Text style={styles.cardTitle}>
-      Hydration
-    </Text>
-
-    <Text style={styles.cardText}>
-      Simple ways to stay hydrated throughout your day.
-    </Text>
-  </View>
-
-  <Text style={styles.arrow}>
-    ›
-  </Text>
-</Pressable>
-
-        {/* Sustainable Food */}
-        <Pressable
-  style={styles.card}
-  onPress={() => router.push('/sustainable-food')}
->
-          <Text style={styles.cardEmoji}>
-            🌱
-          </Text>
+        {/* Whole Foods */}
+        <View style={styles.card}>
+          <Text style={styles.cardEmoji}>🌾</Text>
 
           <View style={styles.cardContent}>
             <Text style={styles.cardTitle}>
-              Sustainable Food Choices
+              Prefer nourishing whole foods
             </Text>
 
             <Text style={styles.cardText}>
-              Explore nutritious choices that can also be
-              kinder to the environment.
+              Foods such as whole grains, vegetables,
+              fruits, pulses and nuts can add variety
+              and nourishment to everyday meals.
             </Text>
           </View>
+        </View>
 
-          <Text style={styles.arrow}>›</Text>
-        </Pressable>
+        {/* Reduce Waste */}
+        <View style={styles.card}>
+          <Text style={styles.cardEmoji}>♻️</Text>
+
+          <View style={styles.cardContent}>
+            <Text style={styles.cardTitle}>
+              Reduce food waste
+            </Text>
+
+            <Text style={styles.cardText}>
+              Planning meals, storing food properly and
+              using leftovers creatively can help reduce
+              unnecessary food waste.
+            </Text>
+          </View>
+        </View>
+
+        {/* Practical Ideas */}
+        <Text style={styles.sectionTitle}>
+          Easy Ideas
+        </Text>
+
+        <View style={styles.ideaCard}>
+          <Text style={styles.idea}>
+            🌿 Add one seasonal fruit to your day
+          </Text>
+
+          <Text style={styles.idea}>
+            🫘 Include pulses or beans in regular meals
+          </Text>
+
+          <Text style={styles.idea}>
+            🥕 Buy only what you are likely to use
+          </Text>
+
+          <Text style={styles.idea}>
+            ♻️ Turn suitable leftovers into another meal
+          </Text>
+        </View>
 
         {/* Reminder */}
         <View style={styles.note}>
           <Text style={styles.noteTitle}>
-            💗 A gentle reminder
+            💗 Sustainability without pressure
           </Text>
 
           <Text style={styles.noteText}>
-            There is no single perfect diet. Healthy eating
-            is about finding balanced and sustainable choices
-            that work for you.
+            You do not need to completely change the way
+            you eat. Even small, realistic choices can
+            contribute to healthier and more sustainable
+            habits over time.
           </Text>
         </View>
 
@@ -198,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 32,
+    fontSize: 31,
     fontWeight: '700',
     color: '#7A4055',
     marginTop: 8,
@@ -250,7 +248,7 @@ const styles = StyleSheet.create({
     padding: 17,
     marginBottom: 12,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     borderWidth: 1,
     borderColor: '#F3DDE3',
   },
@@ -274,20 +272,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     color: '#8A747B',
-    marginTop: 4,
+    marginTop: 5,
   },
 
-  arrow: {
-    fontSize: 27,
-    color: '#C96F89',
-    marginLeft: 8,
-  },
-
-  note: {
+  ideaCard: {
     backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
-    marginTop: 10,
+  },
+
+  idea: {
+    fontSize: 13,
+    lineHeight: 21,
+    color: '#7A4055',
+    marginBottom: 10,
+  },
+
+  note: {
+    backgroundColor: '#F8DDE5',
+    borderRadius: 20,
+    padding: 18,
+    marginTop: 18,
   },
 
   noteTitle: {
