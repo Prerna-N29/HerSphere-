@@ -34,7 +34,8 @@ export default function ProfileScreen() {
         <Pressable
           style={[
             styles.option,
-            selected.includes('Menstrual Health') && styles.selectedOption,
+            selected.includes('Menstrual Health') &&
+              styles.selectedOption,
           ]}
           onPress={() => toggleOption('Menstrual Health')}
         >
@@ -50,7 +51,8 @@ export default function ProfileScreen() {
         <Pressable
           style={[
             styles.option,
-            selected.includes('Nutrition & Food') && styles.selectedOption,
+            selected.includes('Nutrition & Food') &&
+              styles.selectedOption,
           ]}
           onPress={() => toggleOption('Nutrition & Food')}
         >
@@ -104,9 +106,11 @@ export default function ProfileScreen() {
           selected.length === 0 && styles.disabledButton,
         ]}
         disabled={selected.length === 0}
-        onPress={() => router.push('/explore')}
+        onPress={() => router.replace('/explore')}
       >
-        <Text style={styles.buttonText}>Continue</Text>
+        <Text style={styles.buttonText}>
+          Continue
+        </Text>
       </Pressable>
     </View>
   );

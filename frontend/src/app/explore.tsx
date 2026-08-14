@@ -1,4 +1,12 @@
-import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from 'react-native';
+
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
   return (
@@ -8,12 +16,19 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>Good morning 🌸</Text>
-            <Text style={styles.title}>Welcome to HerSphere</Text>
+            <Text style={styles.greeting}>
+              Good morning 🌸
+            </Text>
+
+            <Text style={styles.title}>
+              Welcome to HerSphere
+            </Text>
           </View>
 
           <View style={styles.profileCircle}>
-            <Text style={styles.profileEmoji}>🌷</Text>
+            <Text style={styles.profileEmoji}>
+              🌷
+            </Text>
           </View>
         </View>
 
@@ -28,6 +43,7 @@ export default function HomeScreen() {
           </Text>
 
           <View style={styles.moodRow}>
+
             <Pressable style={styles.moodButton}>
               <Text style={styles.moodEmoji}>😊</Text>
               <Text style={styles.moodText}>Great</Text>
@@ -42,6 +58,7 @@ export default function HomeScreen() {
               <Text style={styles.moodEmoji}>😔</Text>
               <Text style={styles.moodText}>Low</Text>
             </Pressable>
+
           </View>
         </View>
 
@@ -52,41 +69,64 @@ export default function HomeScreen() {
 
         <View style={styles.featureGrid}>
 
-          <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>🌸</Text>
+          {/* Menstrual Health */}
+          <Pressable
+            style={styles.featureCard}
+            onPress={() => router.push('/menstrual')}
+          >
+            <Text style={styles.featureEmoji}>
+              🌸
+            </Text>
+
             <Text style={styles.featureTitle}>
               Menstrual Health
             </Text>
+
             <Text style={styles.featureDescription}>
               Track and understand your cycle
             </Text>
           </Pressable>
 
+          {/* Nutrition */}
           <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>🥗</Text>
+            <Text style={styles.featureEmoji}>
+              🥗
+            </Text>
+
             <Text style={styles.featureTitle}>
               Smart Nutrition
             </Text>
+
             <Text style={styles.featureDescription}>
               Personalized food guidance
             </Text>
           </Pressable>
 
+          {/* Well-being */}
           <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>💭</Text>
+            <Text style={styles.featureEmoji}>
+              💭
+            </Text>
+
             <Text style={styles.featureTitle}>
               Well-being
             </Text>
+
             <Text style={styles.featureDescription}>
               Support your emotional health
             </Text>
           </Pressable>
 
+          {/* AI Buddy */}
           <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>🤖</Text>
+            <Text style={styles.featureEmoji}>
+              🤖
+            </Text>
+
             <Text style={styles.featureTitle}>
               AI Health Buddy
             </Text>
+
             <Text style={styles.featureDescription}>
               Ask questions in a safe space
             </Text>
@@ -99,8 +139,11 @@ export default function HomeScreen() {
           Explore HerSphere
         </Text>
 
+        {/* Myth vs Fact */}
         <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>📚</Text>
+          <Text style={styles.wideEmoji}>
+            📚
+          </Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -112,11 +155,16 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
         </Pressable>
 
+        {/* Doctor Guidance */}
         <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>🩺</Text>
+          <Text style={styles.wideEmoji}>
+            🩺
+          </Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -128,11 +176,16 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
         </Pressable>
 
+        {/* Sustainable Food */}
         <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>🌱</Text>
+          <Text style={styles.wideEmoji}>
+            🌱
+          </Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -144,7 +197,9 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
         </Pressable>
 
       </View>
