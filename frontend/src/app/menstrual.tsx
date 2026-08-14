@@ -1,134 +1,214 @@
-import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { useState } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from 'react-native';
 import { router } from 'expo-router';
 
 export default function MenstrualHealthScreen() {
+  const [periodStarted, setPeriodStarted] = useState(false);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
 
         {/* Back */}
-        <Pressable onPress={() => router.back()}>
+        <Pressable
+          onPress={() => router.back()}
+          style={styles.backButton}
+        >
           <Text style={styles.back}>‹ Back</Text>
         </Pressable>
 
         {/* Header */}
         <Text style={styles.emoji}>🌸</Text>
 
-        <Text style={styles.title}>Menstrual Health</Text>
+        <Text style={styles.title}>
+          Menstrual Health
+        </Text>
 
         <Text style={styles.subtitle}>
           Understand your cycle, listen to your body,
           and learn what is normal for you.
         </Text>
 
+        {/* Period Tracker */}
+        <View style={styles.trackerCard}>
+          <Text style={styles.cardLabel}>
+            PERIOD TRACKER
+          </Text>
+
+          <Text style={styles.cardTitle}>
+            When did your last period start?
+          </Text>
+
+          <Text style={styles.cardDescription}>
+            Tracking your cycle can help you understand
+            your body's patterns over time.
+          </Text>
+
+          {!periodStarted ? (
+            <Pressable
+              style={styles.primaryButton}
+              onPress={() => setPeriodStarted(true)}
+            >
+              <Text style={styles.primaryButtonText}>
+                🩸 I started my period today
+              </Text>
+            </Pressable>
+          ) : (
+            <View style={styles.successBox}>
+              <Text style={styles.successEmoji}>
+                🌷
+              </Text>
+
+              <Text style={styles.successTitle}>
+                Period started today
+              </Text>
+
+              <Text style={styles.successText}>
+                We've recorded today as Day 1 of your cycle.
+              </Text>
+
+              <Pressable
+                style={styles.secondaryButton}
+                onPress={() => setPeriodStarted(false)}
+              >
+                <Text style={styles.secondaryButtonText}>
+                  Change
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        </View>
+
         {/* Cycle Overview */}
-        <View style={styles.cycleCard}>
-          <Text style={styles.cardLabel}>YOUR CYCLE</Text>
+        <Text style={styles.sectionTitle}>
+          Cycle Overview
+        </Text>
 
-          <Text style={styles.cycleTitle}>
-            Period information
-          </Text>
+        <View style={styles.statsRow}>
 
-          <Text style={styles.cycleDescription}>
-            Start tracking your cycle to receive
-            personalized insights.
-          </Text>
+          <View style={styles.statCard}>
+            <Text style={styles.statEmoji}>🩸</Text>
 
-          <Pressable style={styles.primaryButton}>
-            <Text style={styles.primaryButtonText}>
-              Start Tracking
+            <Text style={styles.statValue}>
+              {periodStarted ? 'Day 1' : '--'}
             </Text>
-          </Pressable>
+
+            <Text style={styles.statLabel}>
+              Current cycle
+            </Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statEmoji}>📅</Text>
+
+            <Text style={styles.statValue}>
+              28 days
+            </Text>
+
+            <Text style={styles.statLabel}>
+              Typical cycle
+            </Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statEmoji}>🌙</Text>
+
+            <Text style={styles.statValue}>
+              --
+            </Text>
+
+            <Text style={styles.statLabel}>
+              Next period
+            </Text>
+          </View>
+
         </View>
 
         {/* Quick Access */}
         <Text style={styles.sectionTitle}>
-          Quick Access
+          Explore
         </Text>
 
-        <View style={styles.grid}>
+        <Pressable style={styles.exploreCard}>
+          <Text style={styles.exploreEmoji}>
+            📚
+          </Text>
 
-          {/* Period Tracker */}
-          <Pressable style={styles.smallCard}>
-            <Text style={styles.smallEmoji}>🩸</Text>
-
-            <Text style={styles.smallTitle}>
-              Period Tracker
+          <View style={styles.exploreContent}>
+            <Text style={styles.exploreTitle}>
+              Learn about your cycle
             </Text>
 
-            <Text style={styles.smallDescription}>
-              Record your period and symptoms.
+            <Text style={styles.exploreText}>
+              Understand the different phases of the
+              menstrual cycle.
             </Text>
-          </Pressable>
+          </View>
 
-          {/* Learn */}
-          <Pressable style={styles.smallCard}>
-            <Text style={styles.smallEmoji}>💡</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </Pressable>
 
-            <Text style={styles.smallTitle}>
-              Learn
+        <Pressable style={styles.exploreCard}>
+          <Text style={styles.exploreEmoji}>
+            💗
+          </Text>
+
+          <View style={styles.exploreContent}>
+            <Text style={styles.exploreTitle}>
+              Track symptoms
             </Text>
 
-            <Text style={styles.smallDescription}>
-              Understand your menstrual health.
+            <Text style={styles.exploreText}>
+              Keep track of cramps, mood, flow and
+              other changes.
             </Text>
-          </Pressable>
+          </View>
 
-          {/* Myth vs Fact */}
-          <Pressable style={styles.smallCard}>
-            <Text style={styles.smallEmoji}>📚</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </Pressable>
 
-            <Text style={styles.smallTitle}>
+        <Pressable style={styles.exploreCard}>
+          <Text style={styles.exploreEmoji}>
+            ❓
+          </Text>
+
+          <View style={styles.exploreContent}>
+            <Text style={styles.exploreTitle}>
               Myth vs Fact
             </Text>
 
-            <Text style={styles.smallDescription}>
-              Separate common myths from facts.
+            <Text style={styles.exploreText}>
+              Learn the facts behind common menstrual
+              health myths.
             </Text>
-          </Pressable>
+          </View>
 
-          {/* Seek Help */}
-          <Pressable style={styles.smallCard}>
-            <Text style={styles.smallEmoji}>🩺</Text>
-
-            <Text style={styles.smallTitle}>
-              When to Seek Help
-            </Text>
-
-            <Text style={styles.smallDescription}>
-              Learn when professional guidance may help.
-            </Text>
-          </Pressable>
-
-        </View>
-
-        {/* Educational Section */}
-        <Text style={styles.sectionTitle}>
-          Know Your Body 🌷
-        </Text>
-
-        <View style={styles.infoCard}>
-          <Text style={styles.infoTitle}>
-            Your menstrual cycle is unique
+          <Text style={styles.arrow}>
+            ›
           </Text>
+        </Pressable>
 
-          <Text style={styles.infoText}>
-            Cycle length, symptoms, flow and emotions
-            can vary from person to person. Tracking
-            these changes can help you understand
-            your own patterns.
-          </Text>
-        </View>
-
-        {/* Important Note */}
+        {/* Reminder */}
         <View style={styles.noteCard}>
           <Text style={styles.noteTitle}>
-            💗 Remember
+            🌷 Your cycle is unique
           </Text>
 
           <Text style={styles.noteText}>
-            HerSphere provides educational guidance and
-            does not replace professional medical advice.
+            Cycle length and symptoms can vary from
+            person to person. HerSphere helps you
+            understand your own patterns rather than
+            comparing yourself with others.
           </Text>
         </View>
 
@@ -144,19 +224,23 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    width: '100%',
+    maxWidth: 700,
+    alignSelf: 'center',
     paddingHorizontal: 22,
     paddingTop: 50,
-    paddingBottom: 40,
-    maxWidth: 700,
-    width: '100%',
-    alignSelf: 'center',
+    paddingBottom: 50,
+  },
+
+  backButton: {
+    alignSelf: 'flex-start',
+    marginBottom: 20,
   },
 
   back: {
     fontSize: 17,
     color: '#C96F89',
     fontWeight: '600',
-    marginBottom: 22,
   },
 
   emoji: {
@@ -177,7 +261,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  cycleCard: {
+  trackerCard: {
     backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
@@ -191,31 +275,73 @@ const styles = StyleSheet.create({
     color: '#C96F89',
   },
 
-  cycleTitle: {
+  cardTitle: {
     fontSize: 21,
     fontWeight: '700',
     color: '#7A4055',
-    marginTop: 8,
+    marginTop: 9,
   },
 
-  cycleDescription: {
+  cardDescription: {
     fontSize: 14,
     lineHeight: 21,
     color: '#8A747B',
-    marginTop: 6,
+    marginTop: 7,
   },
 
   primaryButton: {
     backgroundColor: '#C96F89',
-    borderRadius: 25,
-    paddingVertical: 13,
+    borderRadius: 26,
+    paddingVertical: 14,
     alignItems: 'center',
-    marginTop: 18,
+    marginTop: 20,
   },
 
   primaryButtonText: {
     color: '#FFFFFF',
     fontSize: 15,
+    fontWeight: '600',
+  },
+
+  successBox: {
+    backgroundColor: '#FFF7F8',
+    borderRadius: 18,
+    padding: 18,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+
+  successEmoji: {
+    fontSize: 30,
+  },
+
+  successTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#7A4055',
+    marginTop: 7,
+  },
+
+  successText: {
+    fontSize: 13,
+    lineHeight: 19,
+    textAlign: 'center',
+    color: '#8A747B',
+    marginTop: 5,
+  },
+
+  secondaryButton: {
+    borderWidth: 1,
+    borderColor: '#C96F89',
+    borderRadius: 22,
+    paddingVertical: 9,
+    paddingHorizontal: 25,
+    marginTop: 14,
+  },
+
+  secondaryButtonText: {
+    color: '#C96F89',
+    fontSize: 13,
     fontWeight: '600',
   },
 
@@ -227,66 +353,83 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
 
-  grid: {
+  statsRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
+    gap: 10,
   },
 
-  smallCard: {
+  statCard: {
+    flex: 1,
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 17,
-    width: '48%',
-    minHeight: 145,
+    borderRadius: 18,
+    padding: 14,
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#F3DDE3',
   },
 
-  smallEmoji: {
-    fontSize: 27,
-    marginBottom: 10,
+  statEmoji: {
+    fontSize: 23,
   },
 
-  smallTitle: {
+  statValue: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#7A4055',
+    marginTop: 8,
+  },
+
+  statLabel: {
+    fontSize: 10,
+    color: '#8A747B',
+    textAlign: 'center',
+    marginTop: 4,
+  },
+
+  exploreCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 17,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#F3DDE3',
+  },
+
+  exploreEmoji: {
+    fontSize: 28,
+    marginRight: 15,
+  },
+
+  exploreContent: {
+    flex: 1,
+  },
+
+  exploreTitle: {
     fontSize: 15,
     fontWeight: '700',
     color: '#7A4055',
   },
 
-  smallDescription: {
+  exploreText: {
     fontSize: 12,
-    lineHeight: 17,
+    lineHeight: 18,
     color: '#8A747B',
-    marginTop: 5,
+    marginTop: 4,
   },
 
-  infoCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#F3DDE3',
-  },
-
-  infoTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: '#7A4055',
-  },
-
-  infoText: {
-    fontSize: 14,
-    lineHeight: 22,
-    color: '#8A747B',
-    marginTop: 8,
+  arrow: {
+    fontSize: 27,
+    color: '#C96F89',
+    marginLeft: 8,
   },
 
   noteCard: {
     backgroundColor: '#FFF0F3',
-    borderRadius: 18,
+    borderRadius: 20,
     padding: 18,
-    marginTop: 20,
+    marginTop: 18,
   },
 
   noteTitle: {
@@ -297,8 +440,8 @@ const styles = StyleSheet.create({
 
   noteText: {
     fontSize: 12,
-    lineHeight: 18,
+    lineHeight: 19,
     color: '#8A747B',
-    marginTop: 6,
+    marginTop: 7,
   },
 });
