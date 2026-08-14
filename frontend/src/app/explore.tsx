@@ -1,14 +1,7 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from 'react-native';
-
+import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 
-export default function HomeScreen() {
+export default function ExploreScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
@@ -16,37 +9,37 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>
-              Good morning 🌸
-            </Text>
+            <Text style={styles.greeting}>Good morning 🌸</Text>
 
             <Text style={styles.title}>
               Welcome to HerSphere
             </Text>
           </View>
 
-          <View style={styles.profileCircle}>
-            <Text style={styles.profileEmoji}>
-              🌷
-            </Text>
-          </View>
+          <Pressable style={styles.profileCircle}>
+            <Text style={styles.profileEmoji}>🌷</Text>
+          </Pressable>
         </View>
 
-        {/* Wellness Check */}
-        <View style={styles.wellnessCard}>
-          <Text style={styles.cardTitle}>
+        {/* Daily Check-in */}
+        <View style={styles.checkInCard}>
+          <Text style={styles.checkInTitle}>
             How are you feeling today?
           </Text>
 
-          <Text style={styles.cardDescription}>
+          <Text style={styles.checkInSubtitle}>
             Take a moment to check in with yourself.
           </Text>
 
           <View style={styles.moodRow}>
-
             <Pressable style={styles.moodButton}>
               <Text style={styles.moodEmoji}>😊</Text>
               <Text style={styles.moodText}>Great</Text>
+            </Pressable>
+
+            <Pressable style={styles.moodButton}>
+              <Text style={styles.moodEmoji}>🙂</Text>
+              <Text style={styles.moodText}>Good</Text>
             </Pressable>
 
             <Pressable style={styles.moodButton}>
@@ -58,11 +51,10 @@ export default function HomeScreen() {
               <Text style={styles.moodEmoji}>😔</Text>
               <Text style={styles.moodText}>Low</Text>
             </Pressable>
-
           </View>
         </View>
 
-        {/* Main Features */}
+        {/* Wellness Features */}
         <Text style={styles.sectionTitle}>
           Your Wellness Space
         </Text>
@@ -74,9 +66,9 @@ export default function HomeScreen() {
             style={styles.featureCard}
             onPress={() => router.push('/menstrual')}
           >
-            <Text style={styles.featureEmoji}>
-              🌸
-            </Text>
+            <View style={styles.iconCircle}>
+              <Text style={styles.featureEmoji}>🌸</Text>
+            </View>
 
             <Text style={styles.featureTitle}>
               Menstrual Health
@@ -89,9 +81,9 @@ export default function HomeScreen() {
 
           {/* Nutrition */}
           <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>
-              🥗
-            </Text>
+            <View style={styles.iconCircle}>
+              <Text style={styles.featureEmoji}>🥗</Text>
+            </View>
 
             <Text style={styles.featureTitle}>
               Smart Nutrition
@@ -102,11 +94,11 @@ export default function HomeScreen() {
             </Text>
           </Pressable>
 
-          {/* Well-being */}
+          {/* Emotional Well-being */}
           <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>
-              💭
-            </Text>
+            <View style={styles.iconCircle}>
+              <Text style={styles.featureEmoji}>💭</Text>
+            </View>
 
             <Text style={styles.featureTitle}>
               Well-being
@@ -119,9 +111,9 @@ export default function HomeScreen() {
 
           {/* AI Buddy */}
           <Pressable style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>
-              🤖
-            </Text>
+            <View style={styles.iconCircle}>
+              <Text style={styles.featureEmoji}>🤖</Text>
+            </View>
 
             <Text style={styles.featureTitle}>
               AI Health Buddy
@@ -134,16 +126,13 @@ export default function HomeScreen() {
 
         </View>
 
-        {/* Additional Features */}
+        {/* Explore */}
         <Text style={styles.sectionTitle}>
           Explore HerSphere
         </Text>
 
-        {/* Myth vs Fact */}
         <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>
-            📚
-          </Text>
+          <Text style={styles.wideEmoji}>📚</Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -155,16 +144,11 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>
-            ›
-          </Text>
+          <Text style={styles.arrow}>›</Text>
         </Pressable>
 
-        {/* Doctor Guidance */}
         <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>
-            🩺
-          </Text>
+          <Text style={styles.wideEmoji}>🩺</Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -172,20 +156,15 @@ export default function HomeScreen() {
             </Text>
 
             <Text style={styles.wideDescription}>
-              Know when and how to seek professional help.
+              Know when professional guidance may help.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>
-            ›
-          </Text>
+          <Text style={styles.arrow}>›</Text>
         </Pressable>
 
-        {/* Sustainable Food */}
         <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>
-            🌱
-          </Text>
+          <Text style={styles.wideEmoji}>🌱</Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -197,9 +176,7 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>
-            ›
-          </Text>
+          <Text style={styles.arrow}>›</Text>
         </Pressable>
 
       </View>
@@ -214,12 +191,12 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    width: '100%',
+    maxWidth: 700,
+    alignSelf: 'center',
     paddingHorizontal: 22,
     paddingTop: 55,
-    paddingBottom: 40,
-    maxWidth: 700,
-    width: '100%',
-    alignSelf: 'center',
+    paddingBottom: 50,
   },
 
   header: {
@@ -230,8 +207,8 @@ const styles = StyleSheet.create({
 
   greeting: {
     fontSize: 15,
-    color: '#C96F89',
     fontWeight: '600',
+    color: '#C96F89',
   },
 
   title: {
@@ -246,28 +223,28 @@ const styles = StyleSheet.create({
     height: 52,
     borderRadius: 26,
     backgroundColor: '#F8DDE5',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   profileEmoji: {
     fontSize: 25,
   },
 
-  wellnessCard: {
+  checkInCard: {
     backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
   },
 
-  cardTitle: {
+  checkInTitle: {
     fontSize: 19,
     fontWeight: '700',
     color: '#7A4055',
   },
 
-  cardDescription: {
+  checkInSubtitle: {
     fontSize: 14,
     color: '#8A747B',
     marginTop: 6,
@@ -275,24 +252,24 @@ const styles = StyleSheet.create({
 
   moodRow: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
     marginTop: 18,
   },
 
   moodButton: {
     flex: 1,
     backgroundColor: '#FFF7F8',
-    borderRadius: 16,
+    borderRadius: 15,
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 11,
   },
 
   moodEmoji: {
-    fontSize: 25,
+    fontSize: 23,
   },
 
   moodText: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#7A4055',
     marginTop: 4,
   },
@@ -312,18 +289,27 @@ const styles = StyleSheet.create({
   },
 
   featureCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 18,
     width: '48%',
-    minHeight: 155,
+    minHeight: 165,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 22,
+    padding: 18,
     borderWidth: 1,
     borderColor: '#F3DDE3',
   },
 
-  featureEmoji: {
-    fontSize: 30,
+  iconCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#FFF0F3',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 12,
+  },
+
+  featureEmoji: {
+    fontSize: 25,
   },
 
   featureTitle: {
