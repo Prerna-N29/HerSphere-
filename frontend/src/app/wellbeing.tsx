@@ -6,8 +6,18 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useState } from 'react';
 
 export default function WellbeingScreen() {
+  const [selectedMood, setSelectedMood] = useState<string | null>(null);
+
+  const moods = [
+    { name: 'Great', emoji: '😊' },
+    { name: 'Good', emoji: '🙂' },
+    { name: 'Okay', emoji: '😐' },
+    { name: 'Low', emoji: '😔' },
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
@@ -56,28 +66,45 @@ export default function WellbeingScreen() {
         </Text>
 
         <View style={styles.moodCard}>
+          {moods.map((mood) => (
+            <Pressable
+              key={mood.name}
+              onPress={() => setSelectedMood(mood.name)}
+              style={[
+                styles.moodOption,
+                selectedMood === mood.name &&
+                  styles.selectedMood,
+              ]}
+            >
+              <Text style={styles.moodEmoji}>
+                {mood.emoji}
+              </Text>
 
-          <Pressable style={styles.moodOption}>
-            <Text style={styles.moodEmoji}>😊</Text>
-            <Text style={styles.moodText}>Great</Text>
-          </Pressable>
+              <Text style={styles.moodText}>
+                {mood.name}
+              </Text>
 
-          <Pressable style={styles.moodOption}>
-            <Text style={styles.moodEmoji}>🙂</Text>
-            <Text style={styles.moodText}>Good</Text>
-          </Pressable>
-
-          <Pressable style={styles.moodOption}>
-            <Text style={styles.moodEmoji}>😐</Text>
-            <Text style={styles.moodText}>Okay</Text>
-          </Pressable>
-
-          <Pressable style={styles.moodOption}>
-            <Text style={styles.moodEmoji}>😔</Text>
-            <Text style={styles.moodText}>Low</Text>
-          </Pressable>
-
+              {selectedMood === mood.name && (
+                <Text style={styles.check}>
+                  ✓
+                </Text>
+              )}
+            </Pressable>
+          ))}
         </View>
+
+        {/* Selected Mood */}
+        {selectedMood && (
+          <View style={styles.moodSummary}>
+            <Text style={styles.moodSummaryEmoji}>
+              🌷
+            </Text>
+
+            <Text style={styles.moodSummaryText}>
+              You're feeling <Text style={styles.bold}>{selectedMood}</Text> today.
+            </Text>
+          </View>
+        )}
 
         {/* Wellbeing Areas */}
         <Text style={styles.sectionTitle}>
@@ -278,6 +305,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+
+  selectedMood: {
+    backgroundColor: '#F8DDE5',
+    borderColor: '#C96F89',
   },
 
   moodEmoji: {
@@ -289,6 +323,38 @@ const styles = StyleSheet.create({
     color: '#7A4055',
     marginTop: 4,
     fontWeight: '600',
+  },
+
+  check: {
+    position: 'absolute',
+    top: 5,
+    right: 7,
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#C96F89',
+  },
+
+  moodSummary: {
+    backgroundColor: '#FFF0F3',
+    borderRadius: 18,
+    padding: 15,
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  moodSummaryEmoji: {
+    fontSize: 23,
+    marginRight: 10,
+  },
+
+  moodSummaryText: {
+    fontSize: 13,
+    color: '#7A4055',
+  },
+
+  bold: {
+    fontWeight: '700',
   },
 
   card: {

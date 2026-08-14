@@ -1,7 +1,23 @@
-import { ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from 'react-native';
 import { router } from 'expo-router';
+import { useState } from 'react';
 
 export default function ExploreScreen() {
+  const [selectedMood, setSelectedMood] = useState<string | null>(null);
+
+  const moods = [
+    { name: 'Great', emoji: '😊' },
+    { name: 'Good', emoji: '🙂' },
+    { name: 'Okay', emoji: '😐' },
+    { name: 'Low', emoji: '😔' },
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
@@ -9,7 +25,9 @@ export default function ExploreScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>Good morning 🌸</Text>
+            <Text style={styles.greeting}>
+              Good morning 🌸
+            </Text>
 
             <Text style={styles.title}>
               Welcome to HerSphere
@@ -32,26 +50,49 @@ export default function ExploreScreen() {
           </Text>
 
           <View style={styles.moodRow}>
-            <Pressable style={styles.moodButton}>
-              <Text style={styles.moodEmoji}>😊</Text>
-              <Text style={styles.moodText}>Great</Text>
-            </Pressable>
+            {moods.map((mood) => (
+              <Pressable
+                key={mood.name}
+                onPress={() => setSelectedMood(mood.name)}
+                style={[
+                  styles.moodButton,
+                  selectedMood === mood.name &&
+                    styles.selectedMood,
+                ]}
+              >
+                <Text style={styles.moodEmoji}>
+                  {mood.emoji}
+                </Text>
 
-            <Pressable style={styles.moodButton}>
-              <Text style={styles.moodEmoji}>🙂</Text>
-              <Text style={styles.moodText}>Good</Text>
-            </Pressable>
+                <Text style={styles.moodText}>
+                  {mood.name}
+                </Text>
 
-            <Pressable style={styles.moodButton}>
-              <Text style={styles.moodEmoji}>😐</Text>
-              <Text style={styles.moodText}>Okay</Text>
-            </Pressable>
-
-            <Pressable style={styles.moodButton}>
-              <Text style={styles.moodEmoji}>😔</Text>
-              <Text style={styles.moodText}>Low</Text>
-            </Pressable>
+                {selectedMood === mood.name && (
+                  <Text style={styles.check}>
+                    ✓
+                  </Text>
+                )}
+              </Pressable>
+            ))}
           </View>
+
+          {/* Mood Summary */}
+          {selectedMood && (
+            <View style={styles.moodSummary}>
+              <Text style={styles.summaryEmoji}>
+                🌷
+              </Text>
+
+              <Text style={styles.summaryText}>
+                You're feeling{' '}
+                <Text style={styles.bold}>
+                  {selectedMood}
+                </Text>{' '}
+                today.
+              </Text>
+            </View>
+          )}
         </View>
 
         {/* Wellness Features */}
@@ -67,7 +108,9 @@ export default function ExploreScreen() {
             onPress={() => router.push('/menstrual')}
           >
             <View style={styles.iconCircle}>
-              <Text style={styles.featureEmoji}>🌸</Text>
+              <Text style={styles.featureEmoji}>
+                🌸
+              </Text>
             </View>
 
             <Text style={styles.featureTitle}>
@@ -80,12 +123,14 @@ export default function ExploreScreen() {
           </Pressable>
 
           {/* Nutrition */}
-<Pressable
-  style={styles.featureCard}
-  onPress={() => router.push('/nutrition')}
->
+          <Pressable
+            style={styles.featureCard}
+            onPress={() => router.push('/nutrition')}
+          >
             <View style={styles.iconCircle}>
-              <Text style={styles.featureEmoji}>🥗</Text>
+              <Text style={styles.featureEmoji}>
+                🥗
+              </Text>
             </View>
 
             <Text style={styles.featureTitle}>
@@ -99,11 +144,13 @@ export default function ExploreScreen() {
 
           {/* Emotional Well-being */}
           <Pressable
-  style={styles.featureCard}
-  onPress={() => router.push('/wellbeing')}
->
+            style={styles.featureCard}
+            onPress={() => router.push('/wellbeing')}
+          >
             <View style={styles.iconCircle}>
-              <Text style={styles.featureEmoji}>💭</Text>
+              <Text style={styles.featureEmoji}>
+                💭
+              </Text>
             </View>
 
             <Text style={styles.featureTitle}>
@@ -117,11 +164,13 @@ export default function ExploreScreen() {
 
           {/* AI Buddy */}
           <Pressable
-  style={styles.featureCard}
-  onPress={() => router.push('/ai-buddy')}
->
+            style={styles.featureCard}
+            onPress={() => router.push('/ai-buddy')}
+          >
             <View style={styles.iconCircle}>
-              <Text style={styles.featureEmoji}>🤖</Text>
+              <Text style={styles.featureEmoji}>
+                🤖
+              </Text>
             </View>
 
             <Text style={styles.featureTitle}>
@@ -140,8 +189,14 @@ export default function ExploreScreen() {
           Explore HerSphere
         </Text>
 
-        <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>📚</Text>
+        {/* Myth vs Fact */}
+        <Pressable
+          style={styles.wideCard}
+          onPress={() => router.push('/myth-fact')}
+        >
+          <Text style={styles.wideEmoji}>
+            📚
+          </Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -153,11 +208,19 @@ export default function ExploreScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
         </Pressable>
 
-        <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>🩺</Text>
+        {/* Doctor Guidance */}
+        <Pressable
+          style={styles.wideCard}
+          onPress={() => router.push('/doctor-guidance')}
+        >
+          <Text style={styles.wideEmoji}>
+            🩺
+          </Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -169,11 +232,19 @@ export default function ExploreScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
         </Pressable>
 
-        <Pressable style={styles.wideCard}>
-          <Text style={styles.wideEmoji}>🌱</Text>
+        {/* Sustainable Food */}
+        <Pressable
+          style={styles.wideCard}
+          onPress={() => router.push('/sustainable-food')}
+        >
+          <Text style={styles.wideEmoji}>
+            🌱
+          </Text>
 
           <View style={styles.wideContent}>
             <Text style={styles.wideTitle}>
@@ -185,7 +256,9 @@ export default function ExploreScreen() {
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text style={styles.arrow}>
+            ›
+          </Text>
         </Pressable>
 
       </View>
@@ -271,6 +344,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     paddingVertical: 11,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+
+  selectedMood: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#C96F89',
   },
 
   moodEmoji: {
@@ -281,6 +361,39 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#7A4055',
     marginTop: 4,
+    fontWeight: '600',
+  },
+
+  check: {
+    position: 'absolute',
+    top: 4,
+    right: 6,
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#C96F89',
+  },
+
+  moodSummary: {
+    backgroundColor: '#FFF0F3',
+    borderRadius: 16,
+    padding: 12,
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  summaryEmoji: {
+    fontSize: 21,
+    marginRight: 9,
+  },
+
+  summaryText: {
+    fontSize: 12,
+    color: '#7A4055',
+  },
+
+  bold: {
+    fontWeight: '700',
   },
 
   sectionTitle: {
