@@ -5,11 +5,114 @@ import {
   Text,
   View,
   Pressable,
+  Platform,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { router } from 'expo-router';
 
 export default function MenstrualHealthScreen() {
-  const [periodStarted, setPeriodStarted] = useState(false);
+  const [periodDate, setPeriodDate] = useState<Date | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const cycleLength = 28;
+
+  // Format date for display
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
+  // Format date for browser input
+  const formatDateForWeb = (date: Date) => {
+    const year = date.getFullYear();
+
+    const month = String(
+      date.getMonth() + 1
+    ).padStart(2, '0');
+
+    const day = String(
+      date.getDate()
+    ).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
+
+  // Handle Android / iOS date picker
+  const handleNativeDateChange = (
+    event: any,
+    selectedDate?: Date
+  ) => {
+    if (Platform.OS === 'android') {
+      setShowDatePicker(false);
+    }
+
+    if (selectedDate) {
+      setPeriodDate(selectedDate);
+
+      if (Platform.OS === 'ios') {
+        setShowDatePicker(false);
+      }
+    }
+  };
+
+  // Handle browser calendar
+  const handleWebDateChange = (
+    event: any
+  ) => {
+    const value = event.target.value;
+
+    if (!value) {
+      return;
+    }
+
+    const selectedDate = new Date(
+      `${value}T00:00:00`
+    );
+
+    if (!isNaN(selectedDate.getTime())) {
+      setPeriodDate(selectedDate);
+    }
+  };
+
+  // Calculate current cycle day
+  const getCycleDay = () => {
+    if (!periodDate) {
+      return '--';
+    }
+
+    const today = new Date();
+    const startDate = new Date(periodDate);
+
+    today.setHours(0, 0, 0, 0);
+    startDate.setHours(0, 0, 0, 0);
+
+    const difference =
+      Math.floor(
+        (today.getTime() -
+          startDate.getTime()) /
+          (1000 * 60 * 60 * 24)
+      ) + 1;
+
+    return `Day ${Math.max(difference, 1)}`;
+  };
+
+  // Calculate next expected period
+  const getNextPeriodDate = () => {
+    if (!periodDate) {
+      return null;
+    }
+
+    const nextDate = new Date(periodDate);
+
+    nextDate.setDate(
+      nextDate.getDate() + cycleLength
+    );
+
+    return nextDate;
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -20,11 +123,15 @@ export default function MenstrualHealthScreen() {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text style={styles.back}>
+            ‹ Back
+          </Text>
         </Pressable>
 
         {/* Header */}
-        <Text style={styles.emoji}>🌸</Text>
+        <Text style={styles.emoji}>
+          🌸
+        </Text>
 
         <Text style={styles.title}>
           Menstrual Health
@@ -37,6 +144,7 @@ export default function MenstrualHealthScreen() {
 
         {/* Period Tracker */}
         <View style={styles.trackerCard}>
+
           <Text style={styles.cardLabel}>
             PERIOD TRACKER
           </Text>
@@ -46,43 +154,125 @@ export default function MenstrualHealthScreen() {
           </Text>
 
           <Text style={styles.cardDescription}>
-            Tracking your cycle can help you understand
-            your body's patterns over time.
+            Choose the date your most recent period began.
           </Text>
 
-          {!periodStarted ? (
-            <Pressable
-              style={styles.primaryButton}
-              onPress={() => setPeriodStarted(true)}
-            >
-              <Text style={styles.primaryButtonText}>
-                🩸 I started my period today
+          {/* Date Button */}
+          <Pressable
+            style={styles.dateButton}
+            onPress={() => {
+              if (Platform.OS !== 'web') {
+                setShowDatePicker(true);
+              }
+            }}
+          >
+            <Text style={styles.calendarEmoji}>
+              📅
+            </Text>
+
+            <View style={styles.dateTextContainer}>
+
+              <Text style={styles.dateLabel}>
+                Last period started
               </Text>
-            </Pressable>
-          ) : (
+
+              <Text style={styles.dateValue}>
+                {periodDate
+                  ? formatDate(periodDate)
+                  : 'Select a date'}
+              </Text>
+
+            </View>
+
+            <Text style={styles.arrow}>
+              ›
+            </Text>
+
+          </Pressable>
+
+          {/* WEB CALENDAR */}
+          {Platform.OS === 'web' && (
+            <View style={styles.webDateContainer}>
+
+              <Text style={styles.webDateLabel}>
+                Choose a date
+              </Text>
+
+              <input
+                type="date"
+                max={
+                  new Date()
+                    .toISOString()
+                    .split('T')[0]
+                }
+                value={
+                  periodDate
+                    ? formatDateForWeb(periodDate)
+                    : ''
+                }
+                onChange={handleWebDateChange}
+                style={{
+                  width: '100%',
+                  height: 45,
+                  borderRadius: 12,
+                  border: '1px solid #E8C7D1',
+                  padding: '0 12px',
+                  fontSize: 15,
+                  color: '#7A4055',
+                  backgroundColor: '#FFFFFF',
+                  boxSizing: 'border-box',
+                }}
+              />
+
+            </View>
+          )}
+
+          {/* ANDROID / IOS CALENDAR */}
+          {showDatePicker &&
+            Platform.OS !== 'web' && (
+              <View style={styles.datePickerContainer}>
+
+                <DateTimePicker
+                  value={
+                    periodDate || new Date()
+                  }
+                  mode="date"
+                  display={
+                    Platform.OS === 'ios'
+                      ? 'spinner'
+                      : 'default'
+                  }
+                  maximumDate={new Date()}
+                  onChange={handleNativeDateChange}
+                />
+
+              </View>
+            )}
+
+          {/* Selected Date */}
+          {periodDate && (
             <View style={styles.successBox}>
+
               <Text style={styles.successEmoji}>
                 🌷
               </Text>
 
-              <Text style={styles.successTitle}>
-                Period started today
-              </Text>
+              <View style={styles.successContent}>
 
-              <Text style={styles.successText}>
-                We've recorded today as Day 1 of your cycle.
-              </Text>
-
-              <Pressable
-                style={styles.secondaryButton}
-                onPress={() => setPeriodStarted(false)}
-              >
-                <Text style={styles.secondaryButtonText}>
-                  Change
+                <Text style={styles.successTitle}>
+                  Period date recorded
                 </Text>
-              </Pressable>
+
+                <Text style={styles.successText}>
+                  Your last period started on{' '}
+                  {formatDate(periodDate)}.
+                </Text>
+
+              </View>
+
             </View>
           )}
+
         </View>
 
         {/* Cycle Overview */}
@@ -92,55 +282,79 @@ export default function MenstrualHealthScreen() {
 
         <View style={styles.statsRow}>
 
+          {/* Current Cycle */}
           <View style={styles.statCard}>
-            <Text style={styles.statEmoji}>🩸</Text>
+
+            <Text style={styles.statEmoji}>
+              🩸
+            </Text>
 
             <Text style={styles.statValue}>
-              {periodStarted ? 'Day 1' : '--'}
+              {getCycleDay()}
             </Text>
 
             <Text style={styles.statLabel}>
               Current cycle
             </Text>
+
           </View>
 
+          {/* Typical Cycle */}
           <View style={styles.statCard}>
-            <Text style={styles.statEmoji}>📅</Text>
+
+            <Text style={styles.statEmoji}>
+              📅
+            </Text>
 
             <Text style={styles.statValue}>
-              28 days
+              {cycleLength} days
             </Text>
 
             <Text style={styles.statLabel}>
               Typical cycle
             </Text>
+
           </View>
 
+          {/* Next Period */}
           <View style={styles.statCard}>
-            <Text style={styles.statEmoji}>🌙</Text>
+
+            <Text style={styles.statEmoji}>
+              🌙
+            </Text>
 
             <Text style={styles.statValue}>
-              --
+              {getNextPeriodDate()
+                ? formatDate(
+                    getNextPeriodDate()!
+                  )
+                : '--'}
             </Text>
 
             <Text style={styles.statLabel}>
               Next period
             </Text>
+
           </View>
 
         </View>
 
-        {/* Quick Access */}
+        {/* Explore */}
         <Text style={styles.sectionTitle}>
           Explore
         </Text>
 
-        <Pressable style={styles.exploreCard}>
+        {/* Learn About Cycle */}
+        <Pressable
+  style={styles.exploreCard}
+  onPress={() => router.push('/cycle-info')}
+>
           <Text style={styles.exploreEmoji}>
             📚
           </Text>
 
           <View style={styles.exploreContent}>
+
             <Text style={styles.exploreTitle}>
               Learn about your cycle
             </Text>
@@ -149,19 +363,24 @@ export default function MenstrualHealthScreen() {
               Understand the different phases of the
               menstrual cycle.
             </Text>
+
           </View>
 
           <Text style={styles.arrow}>
             ›
           </Text>
+
         </Pressable>
 
+        {/* Track Symptoms */}
         <Pressable style={styles.exploreCard}>
+
           <Text style={styles.exploreEmoji}>
             💗
           </Text>
 
           <View style={styles.exploreContent}>
+
             <Text style={styles.exploreTitle}>
               Track symptoms
             </Text>
@@ -170,19 +389,24 @@ export default function MenstrualHealthScreen() {
               Keep track of cramps, mood, flow and
               other changes.
             </Text>
+
           </View>
 
           <Text style={styles.arrow}>
             ›
           </Text>
+
         </Pressable>
 
+        {/* Myth vs Fact */}
         <Pressable style={styles.exploreCard}>
+
           <Text style={styles.exploreEmoji}>
             ❓
           </Text>
 
           <View style={styles.exploreContent}>
+
             <Text style={styles.exploreTitle}>
               Myth vs Fact
             </Text>
@@ -191,15 +415,18 @@ export default function MenstrualHealthScreen() {
               Learn the facts behind common menstrual
               health myths.
             </Text>
+
           </View>
 
           <Text style={styles.arrow}>
             ›
           </Text>
+
         </Pressable>
 
-        {/* Reminder */}
+        {/* Note */}
         <View style={styles.noteCard}>
+
           <Text style={styles.noteTitle}>
             🌷 Your cycle is unique
           </Text>
@@ -210,6 +437,7 @@ export default function MenstrualHealthScreen() {
             understand your own patterns rather than
             comparing yourself with others.
           </Text>
+
         </View>
 
       </View>
@@ -218,6 +446,7 @@ export default function MenstrualHealthScreen() {
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: '#FFF7F8',
@@ -289,60 +518,86 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
 
-  primaryButton: {
-    backgroundColor: '#C96F89',
-    borderRadius: 26,
-    paddingVertical: 14,
-    alignItems: 'center',
+  dateButton: {
+    backgroundColor: '#FFF7F8',
+    borderRadius: 18,
+    padding: 15,
     marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
-  primaryButtonText: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '600',
+  calendarEmoji: {
+    fontSize: 28,
+    marginRight: 13,
+  },
+
+  dateTextContainer: {
+    flex: 1,
+  },
+
+  dateLabel: {
+    fontSize: 11,
+    color: '#8A747B',
+  },
+
+  dateValue: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#7A4055',
+    marginTop: 3,
+  },
+
+  webDateContainer: {
+    backgroundColor: '#FFF7F8',
+    borderRadius: 18,
+    padding: 15,
+    marginTop: 12,
+  },
+
+  webDateLabel: {
+    fontSize: 12,
+    color: '#8A747B',
+    marginBottom: 8,
+  },
+
+  datePickerContainer: {
+    backgroundColor: '#FFF7F8',
+    borderRadius: 18,
+    marginTop: 12,
+    alignItems: 'center',
+    overflow: 'hidden',
   },
 
   successBox: {
     backgroundColor: '#FFF7F8',
     borderRadius: 18,
-    padding: 18,
-    marginTop: 20,
+    padding: 15,
+    marginTop: 12,
+    flexDirection: 'row',
     alignItems: 'center',
   },
 
   successEmoji: {
-    fontSize: 30,
+    fontSize: 28,
+    marginRight: 12,
+  },
+
+  successContent: {
+    flex: 1,
   },
 
   successTitle: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '700',
     color: '#7A4055',
-    marginTop: 7,
   },
 
   successText: {
-    fontSize: 13,
-    lineHeight: 19,
-    textAlign: 'center',
+    fontSize: 12,
+    lineHeight: 18,
     color: '#8A747B',
-    marginTop: 5,
-  },
-
-  secondaryButton: {
-    borderWidth: 1,
-    borderColor: '#C96F89',
-    borderRadius: 22,
-    paddingVertical: 9,
-    paddingHorizontal: 25,
-    marginTop: 14,
-  },
-
-  secondaryButtonText: {
-    color: '#C96F89',
-    fontSize: 13,
-    fontWeight: '600',
+    marginTop: 3,
   },
 
   sectionTitle: {
@@ -377,6 +632,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#7A4055',
     marginTop: 8,
+    textAlign: 'center',
   },
 
   statLabel: {
@@ -444,4 +700,6 @@ const styles = StyleSheet.create({
     color: '#8A747B',
     marginTop: 7,
   },
+
 });
+
