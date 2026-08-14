@@ -373,7 +373,11 @@ export default function MenstrualHealthScreen() {
         </Pressable>
 
         {/* Track Symptoms */}
-        <Pressable style={styles.exploreCard}>
+        {/* Track Symptoms */}
+<Pressable
+  style={styles.exploreCard}
+  onPress={() => router.push('/symptoms')}
+>
 
           <Text style={styles.exploreEmoji}>
             💗
@@ -399,7 +403,11 @@ export default function MenstrualHealthScreen() {
         </Pressable>
 
         {/* Myth vs Fact */}
-        <Pressable style={styles.exploreCard}>
+        {/* Myth vs Fact */}
+<Pressable
+  style={styles.exploreCard}
+  onPress={() => router.push('/myth-fact')}
+>
 
           <Text style={styles.exploreEmoji}>
             ❓
