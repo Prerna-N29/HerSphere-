@@ -12,8 +12,10 @@ export default function HydrationScreen() {
   const [water, setWater] = useState(0);
 
   const goal = 2000;
-  const progress = Math.min(water / goal, 1);
-  const percentage = Math.round(progress * 100);
+  const percentage = Math.min(
+    Math.round((water / goal) * 100),
+    100
+  );
 
   const addWater = (amount: number) => {
     setWater((current) =>
@@ -45,26 +47,26 @@ export default function HydrationScreen() {
         </Text>
 
         <Text style={styles.subtitle}>
-          Staying hydrated supports your body's everyday
-          functions and can help you feel your best.
+          Simple ways to stay hydrated throughout your
+          day and support your everyday wellbeing.
         </Text>
 
-        {/* Water Tracker */}
+        {/* Tracker */}
         <View style={styles.trackerCard}>
 
           <Text style={styles.cardLabel}>
             TODAY'S HYDRATION
           </Text>
 
-          <Text style={styles.waterAmount}>
+          <Text style={styles.amount}>
             {water} ml
           </Text>
 
-          <Text style={styles.goalText}>
+          <Text style={styles.goal}>
             of {goal} ml goal
           </Text>
 
-          {/* Progress Bar */}
+          {/* Progress */}
           <View style={styles.progressBackground}>
             <View
               style={[
@@ -75,11 +77,11 @@ export default function HydrationScreen() {
           </View>
 
           <Text style={styles.progressText}>
-            {percentage}% of today's goal
+            {percentage}% completed
           </Text>
 
-          {/* Quick Add */}
-          <Text style={styles.quickTitle}>
+          {/* Add Water */}
+          <Text style={styles.addTitle}>
             Add water
           </Text>
 
@@ -89,11 +91,11 @@ export default function HydrationScreen() {
               style={styles.waterButton}
               onPress={() => addWater(250)}
             >
-              <Text style={styles.waterButtonEmoji}>
+              <Text style={styles.waterEmoji}>
                 💧
               </Text>
 
-              <Text style={styles.waterButtonText}>
+              <Text style={styles.waterText}>
                 +250 ml
               </Text>
             </Pressable>
@@ -102,11 +104,11 @@ export default function HydrationScreen() {
               style={styles.waterButton}
               onPress={() => addWater(500)}
             >
-              <Text style={styles.waterButtonEmoji}>
+              <Text style={styles.waterEmoji}>
                 💧
               </Text>
 
-              <Text style={styles.waterButtonText}>
+              <Text style={styles.waterText}>
                 +500 ml
               </Text>
             </Pressable>
@@ -114,8 +116,8 @@ export default function HydrationScreen() {
           </View>
 
           <Pressable
-            style={styles.resetButton}
             onPress={resetWater}
+            style={styles.resetButton}
           >
             <Text style={styles.resetText}>
               Reset today's intake
@@ -124,7 +126,7 @@ export default function HydrationScreen() {
 
         </View>
 
-        {/* Hydration Tips */}
+        {/* Tips */}
         <Text style={styles.sectionTitle}>
           Simple Hydration Tips
         </Text>
@@ -138,8 +140,8 @@ export default function HydrationScreen() {
             </Text>
 
             <Text style={styles.tipText}>
-              Having a bottle or glass of water nearby can
-              make it easier to drink throughout the day.
+              Keeping a bottle or glass of water nearby
+              can make regular drinking easier.
             </Text>
           </View>
         </View>
@@ -149,12 +151,12 @@ export default function HydrationScreen() {
 
           <View style={styles.tipContent}>
             <Text style={styles.tipTitle}>
-              Foods can contribute too
+              Eat water-rich foods
             </Text>
 
             <Text style={styles.tipText}>
-              Fruits, vegetables and other water-rich foods
-              can also contribute to your overall fluid intake.
+              Fruits and vegetables can also contribute
+              to your overall fluid intake.
             </Text>
           </View>
         </View>
@@ -164,11 +166,11 @@ export default function HydrationScreen() {
 
           <View style={styles.tipContent}>
             <Text style={styles.tipTitle}>
-              Consider your day
+              Pay attention to your day
             </Text>
 
             <Text style={styles.tipText}>
-              Your fluid needs can vary with activity,
+              Fluid needs can vary depending on activity,
               weather and individual circumstances.
             </Text>
           </View>
@@ -181,9 +183,9 @@ export default function HydrationScreen() {
           </Text>
 
           <Text style={styles.noteText}>
-            The 2,000 ml value shown here is only a simple
-            tracking target, not a medical requirement.
-            Individual hydration needs can vary.
+            The 2,000 ml value shown here is only a
+            simple tracking target, not a medical
+            requirement. Individual needs can vary.
           </Text>
         </View>
 
@@ -223,7 +225,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: '700',
     color: '#7A4055',
     marginTop: 8,
@@ -250,14 +252,14 @@ const styles = StyleSheet.create({
     color: '#C96F89',
   },
 
-  waterAmount: {
+  amount: {
     fontSize: 38,
     fontWeight: '700',
     color: '#7A4055',
     marginTop: 12,
   },
 
-  goalText: {
+  goal: {
     fontSize: 13,
     color: '#8A747B',
     marginTop: 2,
@@ -283,7 +285,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 
-  quickTitle: {
+  addTitle: {
     fontSize: 16,
     fontWeight: '700',
     color: '#7A4055',
@@ -302,16 +304,16 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 13,
     alignItems: 'center',
-    flexDirection: 'row',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
 
-  waterButtonEmoji: {
+  waterEmoji: {
     fontSize: 20,
     marginRight: 7,
   },
 
-  waterButtonText: {
+  waterText: {
     fontSize: 14,
     fontWeight: '700',
     color: '#7A4055',
@@ -324,8 +326,8 @@ const styles = StyleSheet.create({
 
   resetText: {
     fontSize: 12,
-    color: '#C96F89',
     fontWeight: '600',
+    color: '#C96F89',
   },
 
   sectionTitle: {

@@ -78,7 +78,7 @@ export default function NutritionScreen() {
         </Pressable>
 
         {/* Cycle Nutrition */}
-        {/* Cycle Nutrition */}
+        
 <Pressable
   style={styles.card}
   onPress={() => router.push('/cycle-nutrition')}
@@ -102,24 +102,29 @@ export default function NutritionScreen() {
         </Pressable>
 
         {/* Hydration */}
-        <Pressable style={styles.card}>
-          <Text style={styles.cardEmoji}>
-            💧
-          </Text>
+        {/* Hydration */}
+<Pressable
+  style={styles.card}
+  onPress={() => router.push('/hydration')}
+>
+  <Text style={styles.cardEmoji}>
+    💧
+  </Text>
 
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
-              Hydration
-            </Text>
+  <View style={styles.cardContent}>
+    <Text style={styles.cardTitle}>
+      Hydration
+    </Text>
 
-            <Text style={styles.cardText}>
-              Simple ways to stay hydrated throughout
-              your day.
-            </Text>
-          </View>
+    <Text style={styles.cardText}>
+      Simple ways to stay hydrated throughout your day.
+    </Text>
+  </View>
 
-          <Text style={styles.arrow}>›</Text>
-        </Pressable>
+  <Text style={styles.arrow}>
+    ›
+  </Text>
+</Pressable>
 
         {/* Sustainable Food */}
         <Pressable style={styles.card}>
