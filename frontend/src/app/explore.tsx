@@ -80,7 +80,10 @@ export default function ExploreScreen() {
           </Pressable>
 
           {/* Nutrition */}
-          <Pressable style={styles.featureCard}>
+<Pressable
+  style={styles.featureCard}
+  onPress={() => router.push('/nutrition')}
+>
             <View style={styles.iconCircle}>
               <Text style={styles.featureEmoji}>🥗</Text>
             </View>
