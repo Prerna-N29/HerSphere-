@@ -8,9 +8,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { router } from 'expo-router';
 import { useTheme } from '../theme/ThemeContext';
+
+const API_URL = 'https://hersphere-api.onrender.com';
 
 export default function SignupScreen() {
   const { theme } = useTheme();
@@ -19,6 +22,62 @@ export default function SignupScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleSignup = async () => {
+    setMessage('');
+
+    if (!name.trim() || !email.trim()) {
+      setMessage('Please enter your name and email.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setMessage('Password must be at least 6 characters.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(`${API_URL}/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+
+      await response.json();
+
+      setMessage('Account created successfully! 🌸');
+
+      setTimeout(() => {
+        router.replace('/login');
+      }, 1200);
+    } catch (error) {
+      console.error('Signup error:', error);
+      setMessage(
+        'Unable to create your account. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -163,18 +222,36 @@ export default function SignupScreen() {
             secureTextEntry
           />
 
+          {message !== '' && (
+            <Text
+              style={[
+                styles.message,
+                {
+                  color: message.includes('successfully')
+                    ? theme.primary
+                    : '#B44F61',
+                },
+              ]}
+            >
+              {message}
+            </Text>
+          )}
+
           <Pressable
             style={[
               styles.signupButton,
               { backgroundColor: theme.primary },
             ]}
-            onPress={() => {
-              // Registration will be connected to the backend later.
-            }}
+            onPress={handleSignup}
+            disabled={loading}
           >
-            <Text style={styles.signupButtonText}>
-              Create Account
-            </Text>
+            {loading ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <Text style={styles.signupButtonText}>
+                Create Account
+              </Text>
+            )}
           </Pressable>
         </View>
 
@@ -263,6 +340,13 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     paddingHorizontal: 16,
     fontSize: 15,
+  },
+
+  message: {
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 14,
   },
 
   signupButton: {
