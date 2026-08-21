@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 
 export default function ProfileScreen() {
   const [selected, setSelected] = useState<string[]>([]);
+  const [apiMessage, setApiMessage] = useState('');
+
+  useEffect(() => {
+    fetch('https://hersphere-api.onrender.com/hello')
+      .then((response) => response.text())
+      .then((data) => setApiMessage(data))
+      .catch((error) => console.error('API Error:', error));
+  }, []);
 
   const toggleOption = (option: string) => {
     if (selected.includes(option)) {
@@ -25,6 +33,12 @@ export default function ProfileScreen() {
         A few details will help us make your experience
         more relevant to you.
       </Text>
+
+      {apiMessage !== '' && (
+        <Text style={styles.apiMessage}>
+          {apiMessage}
+        </Text>
+      )}
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>
@@ -146,6 +160,13 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
 
+  apiMessage: {
+    fontSize: 14,
+    color: '#C96F89',
+    marginTop: 10,
+    fontWeight: '600',
+  },
+
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
@@ -207,3 +228,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
