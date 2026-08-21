@@ -1,36 +1,107 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function OnboardingScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.step}>LET'S GET TO KNOW YOU</Text>
+  const { theme } = useTheme();
 
-      <Text style={styles.title}>
+  return (
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
+      <Text
+        style={[
+          styles.step,
+          { color: theme.primary },
+        ]}
+      >
+        LET'S GET TO KNOW YOU
+      </Text>
+
+      <Text
+        style={[
+          styles.title,
+          { color: theme.heading },
+        ]}
+      >
         Your health journey starts here 🌸
       </Text>
 
-      <Text style={styles.description}>
+      <Text
+        style={[
+          styles.description,
+          { color: theme.text },
+        ]}
+      >
         Tell us a little about yourself so HerSphere
         can personalize your experience.
       </Text>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>
+      <View
+        style={[
+          styles.card,
+          { backgroundColor: theme.card },
+        ]}
+      >
+        <Text
+          style={[
+            styles.cardTitle,
+            { color: theme.heading },
+          ]}
+        >
           What can HerSphere help with?
         </Text>
 
-        <Text style={styles.option}>🌸 Menstrual Health</Text>
-        <Text style={styles.option}>🥗 Nutrition</Text>
-        <Text style={styles.option}>💭 Emotional Well-being</Text>
-        <Text style={styles.option}>🤖 AI Health Buddy</Text>
+        <Text
+          style={[
+            styles.option,
+            { color: theme.text },
+          ]}
+        >
+          🌸 Menstrual Health
+        </Text>
+
+        <Text
+          style={[
+            styles.option,
+            { color: theme.text },
+          ]}
+        >
+          🥗 Nutrition
+        </Text>
+
+        <Text
+          style={[
+            styles.option,
+            { color: theme.text },
+          ]}
+        >
+          💭 Emotional Well-being
+        </Text>
+
+        <Text
+          style={[
+            styles.option,
+            { color: theme.text },
+          ]}
+        >
+          🤖 AI Health Buddy
+        </Text>
       </View>
 
       <Pressable
-        style={styles.button}
-        onPress={() => router.push('/profile')}
+        style={[
+          styles.button,
+          { backgroundColor: theme.primary },
+        ]}
+        onPress={() => router.push('/theme')}
       >
-        <Text style={styles.buttonText}>Continue</Text>
+        <Text style={styles.buttonText}>
+          Choose Your Theme
+        </Text>
       </Pressable>
     </View>
   );
@@ -39,7 +110,6 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
     paddingHorizontal: 28,
     paddingTop: 70,
   },
@@ -48,13 +118,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     letterSpacing: 1.5,
-    color: '#C96F89',
   },
 
   title: {
     fontSize: 30,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 18,
     lineHeight: 40,
   },
@@ -62,12 +130,10 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     lineHeight: 24,
-    color: '#8A747B',
     marginTop: 14,
   },
 
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 22,
     padding: 22,
     marginTop: 32,
@@ -76,18 +142,15 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#7A4055',
     marginBottom: 18,
   },
 
   option: {
     fontSize: 16,
-    color: '#8A747B',
     marginVertical: 9,
   },
 
   button: {
-    backgroundColor: '#C96F89',
     paddingVertical: 15,
     borderRadius: 30,
     alignItems: 'center',

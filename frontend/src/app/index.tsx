@@ -1,30 +1,89 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function HomeScreen() {
+  const { theme } = useTheme();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.logoCircle}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
+      <View
+        style={[
+          styles.logoCircle,
+          { backgroundColor: theme.primaryLight },
+        ]}
+      >
         <Text style={styles.logo}>🌸</Text>
       </View>
 
-      <Text style={styles.title}>HerSphere</Text>
+      <Text
+        style={[
+          styles.title,
+          { color: theme.heading },
+        ]}
+      >
+        HerSphere
+      </Text>
 
-      <Text style={styles.tagline}>
+      <Text
+        style={[
+          styles.tagline,
+          { color: theme.primary },
+        ]}
+      >
         Your health. Your space.{'\n'}Your wellbeing.
       </Text>
 
-      <Text style={styles.description}>
+      <Text
+        style={[
+          styles.description,
+          { color: theme.text },
+        ]}
+      >
         A safe and personalized space for your health,
         nutrition and emotional wellbeing.
       </Text>
 
       <Pressable
-        style={styles.button}
+        style={[
+          styles.button,
+          { backgroundColor: theme.primary },
+        ]}
         onPress={() => router.push('/onboarding')}
       >
-        <Text style={styles.buttonText}>Get Started</Text>
+        <Text style={styles.buttonText}>
+          Get Started
+        </Text>
       </Pressable>
+
+      <View style={styles.loginRow}>
+        <Text
+          style={[
+            styles.loginText,
+            { color: theme.text },
+          ]}
+        >
+          Already have an account?
+        </Text>
+
+        <Pressable
+          onPress={() => router.push('/login')}
+        >
+          <Text
+            style={[
+              styles.loginLink,
+              { color: theme.primary },
+            ]}
+          >
+            {' '}Log In
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -32,7 +91,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 28,
@@ -42,7 +100,6 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     borderRadius: 55,
-    backgroundColor: '#F8DDE5',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
@@ -55,7 +112,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: '700',
-    color: '#7A4055',
     letterSpacing: 0.5,
   },
 
@@ -63,7 +119,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
     lineHeight: 28,
     textAlign: 'center',
-    color: '#9B6377',
     marginTop: 12,
   },
 
@@ -71,14 +126,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 23,
     textAlign: 'center',
-    color: '#8A747B',
     marginTop: 22,
     maxWidth: 350,
   },
 
   button: {
     marginTop: 36,
-    backgroundColor: '#C96F89',
     paddingVertical: 15,
     paddingHorizontal: 55,
     borderRadius: 30,
@@ -88,5 +141,20 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+  },
+
+  loginRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 22,
+  },
+
+  loginText: {
+    fontSize: 14,
+  },
+
+  loginLink: {
+    fontSize: 14,
+    fontWeight: '700',
   },
 });
