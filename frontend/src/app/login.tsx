@@ -18,6 +18,9 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   return (
     <KeyboardAvoidingView
       style={[
@@ -79,7 +82,10 @@ export default function LoginScreen() {
             placeholder="Enter your email"
             placeholderTextColor={theme.text}
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => {
+              setEmail(text);
+              setErrorMessage('');
+            }}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
@@ -106,21 +112,91 @@ export default function LoginScreen() {
             placeholder="Enter your password"
             placeholderTextColor={theme.text}
             value={password}
-            onChangeText={setPassword}
+            onChangeText={(text) => {
+              setPassword(text);
+              setErrorMessage('');
+            }}
             secureTextEntry
           />
+
+          {errorMessage !== '' && (
+            <Text
+              style={[
+                styles.errorMessage,
+                { color: theme.primary },
+              ]}
+            >
+              {errorMessage}
+            </Text>
+          )}
 
           <Pressable
             style={[
               styles.loginButton,
-              { backgroundColor: theme.primary },
+              {
+                backgroundColor: theme.primary,
+                opacity: loading ? 0.6 : 1,
+              },
             ]}
-            onPress={() => {
-              // Backend authentication will be connected here.
+            disabled={loading}
+            onPress={async () => {
+              if (!email.trim() || !password) {
+                setErrorMessage(
+                  'Please enter your email and password.'
+                );
+                return;
+              }
+
+              setLoading(true);
+              setErrorMessage('');
+
+              try {
+                const response = await fetch(
+                  'https://hersphere-api.onrender.com/login',
+                  {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      email: email.trim(),
+                      password: password,
+                    }),
+                  }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                  setErrorMessage(
+                    data.message ||
+                      'Invalid email or password.'
+                  );
+                  return;
+                }
+
+                console.log(
+                  'Login successful:',
+                  data
+                );
+
+                router.replace('/explore');
+              } catch (error) {
+                console.error(
+                  'Login error:',
+                  error
+                );
+
+                setErrorMessage(
+                  'Unable to connect to HerSphere. Please try again.'
+                );
+              } finally {
+                setLoading(false);
+              }
             }}
           >
             <Text style={styles.loginButtonText}>
-              Log In
+              {loading ? 'Logging in...' : 'Log In'}
             </Text>
           </Pressable>
         </View>
@@ -210,6 +286,13 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     paddingHorizontal: 16,
     fontSize: 15,
+  },
+
+  errorMessage: {
+    fontSize: 13,
+    marginTop: 10,
+    textAlign: 'center',
+    fontWeight: '600',
   },
 
   loginButton: {
