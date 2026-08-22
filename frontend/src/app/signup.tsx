@@ -55,6 +55,7 @@ export default function SignupScreen() {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim().toLowerCase(),
+          password: password,
         }),
       });
 
