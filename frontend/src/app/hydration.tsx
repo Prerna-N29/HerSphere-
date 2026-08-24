@@ -7,11 +7,15 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function HydrationScreen() {
+  const { theme } = useTheme();
+
   const [water, setWater] = useState(0);
 
   const goal = 2000;
+
   const percentage = Math.min(
     Math.round((water / goal) * 100),
     100
@@ -28,7 +32,12 @@ export default function HydrationScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
         {/* Back */}
@@ -36,79 +45,151 @@ export default function HydrationScreen() {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
         {/* Header */}
-        <Text style={styles.emoji}>💧</Text>
+        <Text style={styles.emoji}>
+          💧
+        </Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Hydration
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           Simple ways to stay hydrated throughout your
           day and support your everyday wellbeing.
         </Text>
 
         {/* Tracker */}
-        <View style={styles.trackerCard}>
-
-          <Text style={styles.cardLabel}>
+        <View
+          style={[
+            styles.trackerCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.cardLabel,
+              { color: theme.primary },
+            ]}
+          >
             TODAY'S HYDRATION
           </Text>
 
-          <Text style={styles.amount}>
+          <Text
+            style={[
+              styles.amount,
+              { color: theme.heading },
+            ]}
+          >
             {water} ml
           </Text>
 
-          <Text style={styles.goal}>
+          <Text
+            style={[
+              styles.goal,
+              { color: theme.text },
+            ]}
+          >
             of {goal} ml goal
           </Text>
 
           {/* Progress */}
-          <View style={styles.progressBackground}>
+          <View
+            style={[
+              styles.progressBackground,
+              { backgroundColor: theme.background },
+            ]}
+          >
             <View
               style={[
                 styles.progressFill,
-                { width: `${percentage}%` },
+                {
+                  width: `${percentage}%`,
+                  backgroundColor: theme.primary,
+                },
               ]}
             />
           </View>
 
-          <Text style={styles.progressText}>
+          <Text
+            style={[
+              styles.progressText,
+              { color: theme.text },
+            ]}
+          >
             {percentage}% completed
           </Text>
 
           {/* Add Water */}
-          <Text style={styles.addTitle}>
+          <Text
+            style={[
+              styles.addTitle,
+              { color: theme.heading },
+            ]}
+          >
             Add water
           </Text>
 
           <View style={styles.buttonRow}>
 
             <Pressable
-              style={styles.waterButton}
+              style={[
+                styles.waterButton,
+                { backgroundColor: theme.background },
+              ]}
               onPress={() => addWater(250)}
             >
               <Text style={styles.waterEmoji}>
                 💧
               </Text>
 
-              <Text style={styles.waterText}>
+              <Text
+                style={[
+                  styles.waterText,
+                  { color: theme.heading },
+                ]}
+              >
                 +250 ml
               </Text>
             </Pressable>
 
             <Pressable
-              style={styles.waterButton}
+              style={[
+                styles.waterButton,
+                { backgroundColor: theme.background },
+              ]}
               onPress={() => addWater(500)}
             >
               <Text style={styles.waterEmoji}>
                 💧
               </Text>
 
-              <Text style={styles.waterText}>
+              <Text
+                style={[
+                  styles.waterText,
+                  { color: theme.heading },
+                ]}
+              >
                 +500 ml
               </Text>
             </Pressable>
@@ -119,7 +200,12 @@ export default function HydrationScreen() {
             onPress={resetWater}
             style={styles.resetButton}
           >
-            <Text style={styles.resetText}>
+            <Text
+              style={[
+                styles.resetText,
+                { color: theme.primary },
+              ]}
+            >
               Reset today's intake
             </Text>
           </Pressable>
@@ -127,49 +213,117 @@ export default function HydrationScreen() {
         </View>
 
         {/* Tips */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Simple Hydration Tips
         </Text>
 
-        <View style={styles.tipCard}>
-          <Text style={styles.tipEmoji}>🥤</Text>
+        {/* Tip 1 */}
+        <View
+          style={[
+            styles.tipCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.tipEmoji}>
+            🥤
+          </Text>
 
           <View style={styles.tipContent}>
-            <Text style={styles.tipTitle}>
+            <Text
+              style={[
+                styles.tipTitle,
+                { color: theme.heading },
+              ]}
+            >
               Keep water nearby
             </Text>
 
-            <Text style={styles.tipText}>
+            <Text
+              style={[
+                styles.tipText,
+                { color: theme.text },
+              ]}
+            >
               Keeping a bottle or glass of water nearby
               can make regular drinking easier.
             </Text>
           </View>
         </View>
 
-        <View style={styles.tipCard}>
-          <Text style={styles.tipEmoji}>🍉</Text>
+        {/* Tip 2 */}
+        <View
+          style={[
+            styles.tipCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.tipEmoji}>
+            🍉
+          </Text>
 
           <View style={styles.tipContent}>
-            <Text style={styles.tipTitle}>
+            <Text
+              style={[
+                styles.tipTitle,
+                { color: theme.heading },
+              ]}
+            >
               Eat water-rich foods
             </Text>
 
-            <Text style={styles.tipText}>
+            <Text
+              style={[
+                styles.tipText,
+                { color: theme.text },
+              ]}
+            >
               Fruits and vegetables can also contribute
               to your overall fluid intake.
             </Text>
           </View>
         </View>
 
-        <View style={styles.tipCard}>
-          <Text style={styles.tipEmoji}>🌤️</Text>
+        {/* Tip 3 */}
+        <View
+          style={[
+            styles.tipCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.tipEmoji}>
+            🌤️
+          </Text>
 
           <View style={styles.tipContent}>
-            <Text style={styles.tipTitle}>
+            <Text
+              style={[
+                styles.tipTitle,
+                { color: theme.heading },
+              ]}
+            >
               Pay attention to your day
             </Text>
 
-            <Text style={styles.tipText}>
+            <Text
+              style={[
+                styles.tipText,
+                { color: theme.text },
+              ]}
+            >
               Fluid needs can vary depending on activity,
               weather and individual circumstances.
             </Text>
@@ -177,12 +331,27 @@ export default function HydrationScreen() {
         </View>
 
         {/* Reminder */}
-        <View style={styles.note}>
-          <Text style={styles.noteTitle}>
+        <View
+          style={[
+            styles.note,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.noteTitle,
+              { color: theme.heading },
+            ]}
+          >
             💗 A gentle reminder
           </Text>
 
-          <Text style={styles.noteText}>
+          <Text
+            style={[
+              styles.noteText,
+              { color: theme.text },
+            ]}
+          >
             The 2,000 ml value shown here is only a
             simple tracking target, not a medical
             requirement. Individual needs can vary.
@@ -197,7 +366,6 @@ export default function HydrationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -216,7 +384,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -227,19 +394,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   trackerCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -249,25 +413,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 1.4,
-    color: '#C96F89',
   },
 
   amount: {
     fontSize: 38,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 12,
   },
 
   goal: {
     fontSize: 13,
-    color: '#8A747B',
     marginTop: 2,
   },
 
   progressBackground: {
     height: 12,
-    backgroundColor: '#FFF7F8',
     borderRadius: 10,
     marginTop: 20,
     overflow: 'hidden',
@@ -275,20 +435,17 @@ const styles = StyleSheet.create({
 
   progressFill: {
     height: '100%',
-    backgroundColor: '#C96F89',
     borderRadius: 10,
   },
 
   progressText: {
     fontSize: 12,
-    color: '#8A747B',
     marginTop: 8,
   },
 
   addTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 22,
     marginBottom: 10,
   },
@@ -300,7 +457,6 @@ const styles = StyleSheet.create({
 
   waterButton: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
     borderRadius: 16,
     paddingVertical: 13,
     alignItems: 'center',
@@ -316,7 +472,6 @@ const styles = StyleSheet.create({
   waterText: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   resetButton: {
@@ -327,26 +482,22 @@ const styles = StyleSheet.create({
   resetText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#C96F89',
   },
 
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 30,
     marginBottom: 14,
   },
 
   tipCard: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 18,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   tipEmoji: {
@@ -361,18 +512,15 @@ const styles = StyleSheet.create({
   tipTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   tipText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 5,
   },
 
   note: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
     marginTop: 8,
@@ -381,13 +529,11 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   noteText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 });

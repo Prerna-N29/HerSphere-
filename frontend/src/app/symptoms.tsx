@@ -7,8 +7,11 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function SymptomsScreen() {
+  const { theme } = useTheme();
+
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [saved, setSaved] = useState(false);
 
@@ -35,81 +38,143 @@ export default function SymptomsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
-        {/* Back */}
         <Pressable
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
-        {/* Header */}
         <Text style={styles.emoji}>💗</Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Track Symptoms
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           How are you feeling today? Select anything
           you're experiencing.
         </Text>
 
-        {/* Symptoms Card */}
-        <View style={styles.card}>
-
-          <Text style={styles.cardLabel}>
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.cardLabel,
+              { color: theme.primary },
+            ]}
+          >
             TODAY'S SYMPTOMS
           </Text>
 
-          <Text style={styles.cardTitle}>
+          <Text
+            style={[
+              styles.cardTitle,
+              { color: theme.heading },
+            ]}
+          >
             What are you experiencing?
           </Text>
 
           <View style={styles.symptomsGrid}>
-            {symptoms.map((symptom) => (
-              <Pressable
-                key={symptom.name}
-                style={[
-                  styles.symptom,
-                  selectedSymptoms.includes(symptom.name) &&
-                    styles.selectedSymptom,
-                ]}
-                onPress={() =>
-                  toggleSymptom(symptom.name)
-                }
-              >
-                <Text style={styles.symptomEmoji}>
-                  {symptom.emoji}
-                </Text>
+            {symptoms.map((symptom) => {
+              const selected = selectedSymptoms.includes(
+                symptom.name
+              );
 
-                <Text style={styles.symptomText}>
-                  {symptom.name}
-                </Text>
-
-                {selectedSymptoms.includes(
-                  symptom.name
-                ) && (
-                  <Text style={styles.check}>
-                    ✓
+              return (
+                <Pressable
+                  key={symptom.name}
+                  style={[
+                    styles.symptom,
+                    {
+                      backgroundColor: theme.background,
+                      borderColor: 'transparent',
+                    },
+                    selected && {
+                      backgroundColor: theme.card,
+                      borderColor: theme.primary,
+                    },
+                  ]}
+                  onPress={() =>
+                    toggleSymptom(symptom.name)
+                  }
+                >
+                  <Text style={styles.symptomEmoji}>
+                    {symptom.emoji}
                   </Text>
-                )}
-              </Pressable>
-            ))}
+
+                  <Text
+                    style={[
+                      styles.symptomText,
+                      { color: theme.heading },
+                    ]}
+                  >
+                    {symptom.name}
+                  </Text>
+
+                  {selected && (
+                    <Text
+                      style={[
+                        styles.check,
+                        { color: theme.primary },
+                      ]}
+                    >
+                      ✓
+                    </Text>
+                  )}
+                </Pressable>
+              );
+            })}
           </View>
         </View>
 
-        {/* Selected count */}
-        <View style={styles.summaryCard}>
+        <View
+          style={[
+            styles.summaryCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
           <Text style={styles.summaryEmoji}>
             🌷
           </Text>
 
           <View style={styles.summaryContent}>
-            <Text style={styles.summaryTitle}>
+            <Text
+              style={[
+                styles.summaryTitle,
+                { color: theme.heading },
+              ]}
+            >
               {selectedSymptoms.length === 0
                 ? 'No symptoms selected'
                 : `${selectedSymptoms.length} symptom${
@@ -119,20 +184,28 @@ export default function SymptomsScreen() {
                   } selected`}
             </Text>
 
-            <Text style={styles.summaryText}>
+            <Text
+              style={[
+                styles.summaryText,
+                { color: theme.text },
+              ]}
+            >
               Your symptoms help you understand your
               personal cycle patterns over time.
             </Text>
           </View>
         </View>
 
-        {/* Save Button */}
         {!saved && (
           <Pressable
             style={[
               styles.saveButton,
-              selectedSymptoms.length === 0 &&
-                styles.disabledButton,
+              {
+                backgroundColor:
+                  selectedSymptoms.length === 0
+                    ? theme.border
+                    : theme.primary,
+              },
             ]}
             disabled={selectedSymptoms.length === 0}
             onPress={() => setSaved(true)}
@@ -143,26 +216,46 @@ export default function SymptomsScreen() {
           </Pressable>
         )}
 
-        {/* Success Message */}
         {saved && (
-          <View style={styles.successCard}>
+          <View
+            style={[
+              styles.successCard,
+              {
+                backgroundColor: theme.primaryLight,
+                borderColor: theme.border,
+              },
+            ]}
+          >
             <Text style={styles.successEmoji}>
               🌷
             </Text>
 
             <View style={styles.successContent}>
-              <Text style={styles.successTitle}>
+              <Text
+                style={[
+                  styles.successTitle,
+                  { color: theme.heading },
+                ]}
+              >
                 Symptoms saved!
               </Text>
 
-              <Text style={styles.successText}>
+              <Text
+                style={[
+                  styles.successText,
+                  { color: theme.text },
+                ]}
+              >
                 Your symptoms have been recorded for
                 today.
               </Text>
 
               <Pressable
                 onPress={() => router.back()}
-                style={styles.doneButton}
+                style={[
+                  styles.doneButton,
+                  { backgroundColor: theme.primary },
+                ]}
               >
                 <Text style={styles.doneText}>
                   Done
@@ -180,7 +273,6 @@ export default function SymptomsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -199,7 +291,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -210,19 +301,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   card: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -232,13 +320,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 1.4,
-    color: '#C96F89',
   },
 
   cardTitle: {
     fontSize: 21,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 9,
     marginBottom: 18,
   },
@@ -248,18 +334,11 @@ const styles = StyleSheet.create({
   },
 
   symptom: {
-    backgroundColor: '#FFF7F8',
     borderRadius: 16,
     padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'transparent',
-  },
-
-  selectedSymptom: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#C96F89',
   },
 
   symptomEmoji: {
@@ -270,18 +349,15 @@ const styles = StyleSheet.create({
   symptomText: {
     flex: 1,
     fontSize: 15,
-    color: '#7A4055',
     fontWeight: '600',
   },
 
   check: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#C96F89',
   },
 
   summaryCard: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
     marginTop: 18,
@@ -301,26 +377,19 @@ const styles = StyleSheet.create({
   summaryTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   summaryText: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#8A747B',
     marginTop: 5,
   },
 
   saveButton: {
-    backgroundColor: '#C96F89',
     paddingVertical: 16,
     borderRadius: 30,
     alignItems: 'center',
     marginTop: 22,
-  },
-
-  disabledButton: {
-    backgroundColor: '#DDB8C3',
   },
 
   saveText: {
@@ -330,14 +399,12 @@ const styles = StyleSheet.create({
   },
 
   successCard: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 22,
     padding: 20,
     marginTop: 22,
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   successEmoji: {
@@ -352,18 +419,15 @@ const styles = StyleSheet.create({
   successTitle: {
     fontSize: 17,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   successText: {
     fontSize: 13,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 5,
   },
 
   doneButton: {
-    backgroundColor: '#C96F89',
     paddingVertical: 10,
     paddingHorizontal: 22,
     borderRadius: 20,

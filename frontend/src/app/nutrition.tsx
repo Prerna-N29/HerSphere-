@@ -6,10 +6,18 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function NutritionScreen() {
+  const { theme } = useTheme();
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
         {/* Back */}
@@ -17,32 +25,66 @@ export default function NutritionScreen() {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
         {/* Header */}
-        <Text style={styles.emoji}>🥗</Text>
+        <Text style={styles.emoji}>
+          🥗
+        </Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Smart Nutrition
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           Nourish your body with balanced choices that
           support your health and wellbeing.
         </Text>
 
         {/* Daily Nutrition */}
-        <View style={styles.highlightCard}>
+        <View
+          style={[
+            styles.highlightCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
           <Text style={styles.highlightEmoji}>
             🌷
           </Text>
 
-          <Text style={styles.highlightTitle}>
+          <Text
+            style={[
+              styles.highlightTitle,
+              { color: theme.heading },
+            ]}
+          >
             Food is part of your wellbeing
           </Text>
 
-          <Text style={styles.highlightText}>
+          <Text
+            style={[
+              styles.highlightText,
+              { color: theme.text },
+            ]}
+          >
             Your nutritional needs can change throughout
             different stages of life and your menstrual cycle.
             Focus on balance, variety and nourishing foods.
@@ -50,112 +92,220 @@ export default function NutritionScreen() {
         </View>
 
         {/* Nutrition Areas */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Explore Nutrition
         </Text>
 
         {/* Balanced Plate */}
         <Pressable
-  style={styles.card}
-  onPress={() => router.push('/balanced-plate')}
->
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+          onPress={() => router.push('/balanced-plate')}
+        >
           <Text style={styles.cardEmoji}>
             🍽️
           </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Build a Balanced Plate
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Learn how to combine vegetables, proteins,
               grains and healthy fats.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
+            ›
+          </Text>
         </Pressable>
 
         {/* Cycle Nutrition */}
-        
-<Pressable
-  style={styles.card}
-  onPress={() => router.push('/cycle-nutrition')}
->
+        <Pressable
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+          onPress={() => router.push('/cycle-nutrition')}
+        >
           <Text style={styles.cardEmoji}>
             🩸
           </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Nutrition During Your Cycle
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Discover foods and nutrients that may support
               you during different cycle phases.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
+            ›
+          </Text>
         </Pressable>
 
         {/* Hydration */}
-        {/* Hydration */}
-<Pressable
-  style={styles.card}
-  onPress={() => router.push('/hydration')}
->
-  <Text style={styles.cardEmoji}>
-    💧
-  </Text>
+        <Pressable
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+          onPress={() => router.push('/hydration')}
+        >
+          <Text style={styles.cardEmoji}>
+            💧
+          </Text>
 
-  <View style={styles.cardContent}>
-    <Text style={styles.cardTitle}>
-      Hydration
-    </Text>
+          <View style={styles.cardContent}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
+              Hydration
+            </Text>
 
-    <Text style={styles.cardText}>
-      Simple ways to stay hydrated throughout your day.
-    </Text>
-  </View>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
+              Simple ways to stay hydrated throughout your day.
+            </Text>
+          </View>
 
-  <Text style={styles.arrow}>
-    ›
-  </Text>
-</Pressable>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
+            ›
+          </Text>
+        </Pressable>
 
         {/* Sustainable Food */}
         <Pressable
-  style={styles.card}
-  onPress={() => router.push('/sustainable-food')}
->
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+          onPress={() => router.push('/sustainable-food')}
+        >
           <Text style={styles.cardEmoji}>
             🌱
           </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Sustainable Food Choices
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Explore nutritious choices that can also be
               kinder to the environment.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>›</Text>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
+            ›
+          </Text>
         </Pressable>
 
         {/* Reminder */}
-        <View style={styles.note}>
-          <Text style={styles.noteTitle}>
+        <View
+          style={[
+            styles.note,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.noteTitle,
+              { color: theme.heading },
+            ]}
+          >
             💗 A gentle reminder
           </Text>
 
-          <Text style={styles.noteText}>
+          <Text
+            style={[
+              styles.noteText,
+              { color: theme.text },
+            ]}
+          >
             There is no single perfect diet. Healthy eating
             is about finding balanced and sustainable choices
             that work for you.
@@ -170,7 +320,6 @@ export default function NutritionScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -189,7 +338,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -200,19 +348,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   highlightCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -225,34 +370,29 @@ const styles = StyleSheet.create({
   highlightTitle: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 10,
   },
 
   highlightText: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#8A747B',
     marginTop: 7,
   },
 
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 30,
     marginBottom: 14,
   },
 
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 18,
     padding: 17,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   cardEmoji: {
@@ -267,24 +407,20 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   cardText: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#8A747B',
     marginTop: 4,
   },
 
   arrow: {
     fontSize: 27,
-    color: '#C96F89',
     marginLeft: 8,
   },
 
   note: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
     marginTop: 10,
@@ -293,13 +429,11 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   noteText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 });

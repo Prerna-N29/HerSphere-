@@ -10,8 +10,13 @@ import {
   Platform,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
+import { themes } from '../theme/themes';
 
 export default function AIBuddyScreen() {
+  const { themeName } = useTheme();
+  const theme = themes[themeName];
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<
     { text: string; sender: 'user' | 'ai' }[]
@@ -40,128 +45,198 @@ export default function AIBuddyScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-
-        {/* Back */}
         <Pressable
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
-        {/* Header */}
         <View style={styles.header}>
-          <View style={styles.botCircle}>
+          <View
+            style={[
+              styles.botCircle,
+              { backgroundColor: theme.primaryLight },
+            ]}
+          >
             <Text style={styles.botEmoji}>🤖</Text>
           </View>
 
           <View style={styles.headerText}>
-            <Text style={styles.title}>
+            <Text
+              style={[
+                styles.title,
+                { color: theme.heading },
+              ]}
+            >
               AI Health Buddy
             </Text>
 
-            <Text style={styles.status}>
+            <Text
+              style={[
+                styles.status,
+                { color: theme.text },
+              ]}
+            >
               Your supportive health companion
             </Text>
           </View>
         </View>
 
-        {/* Welcome */}
-        <View style={styles.welcomeCard}>
-          <Text style={styles.welcomeEmoji}>
-            🌷
-          </Text>
+        <View
+          style={[
+            styles.welcomeCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text style={styles.welcomeEmoji}>🌷</Text>
 
-          <Text style={styles.welcomeTitle}>
+          <Text
+            style={[
+              styles.welcomeTitle,
+              { color: theme.heading },
+            ]}
+          >
             Hi! I'm your HerSphere health buddy.
           </Text>
 
-          <Text style={styles.welcomeText}>
+          <Text
+            style={[
+              styles.welcomeText,
+              { color: theme.text },
+            ]}
+          >
             Ask me questions about menstrual health,
             nutrition or emotional wellbeing. I'll help
             you find simple, understandable information.
           </Text>
         </View>
 
-        {/* Quick Questions */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           You can ask me about...
         </Text>
 
         <View style={styles.quickQuestions}>
-
           <Pressable
-            style={styles.questionButton}
+            style={[
+              styles.questionButton,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() =>
               askQuestion(
                 'Why do I feel tired during my period?'
               )
             }
           >
-            <Text style={styles.questionEmoji}>
-              🌸
-            </Text>
+            <Text style={styles.questionEmoji}>🌸</Text>
 
-            <Text style={styles.questionText}>
+            <Text
+              style={[
+                styles.questionText,
+                { color: theme.heading },
+              ]}
+            >
               Menstrual health
             </Text>
           </Pressable>
 
           <Pressable
-            style={styles.questionButton}
+            style={[
+              styles.questionButton,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() =>
               askQuestion(
                 'What does a balanced meal look like?'
               )
             }
           >
-            <Text style={styles.questionEmoji}>
-              🥗
-            </Text>
+            <Text style={styles.questionEmoji}>🥗</Text>
 
-            <Text style={styles.questionText}>
+            <Text
+              style={[
+                styles.questionText,
+                { color: theme.heading },
+              ]}
+            >
               Nutrition
             </Text>
           </Pressable>
 
           <Pressable
-            style={styles.questionButton}
+            style={[
+              styles.questionButton,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() =>
               askQuestion(
                 'What can I do when I feel overwhelmed?'
               )
             }
           >
-            <Text style={styles.questionEmoji}>
-              💭
-            </Text>
+            <Text style={styles.questionEmoji}>💭</Text>
 
-            <Text style={styles.questionText}>
+            <Text
+              style={[
+                styles.questionText,
+                { color: theme.heading },
+              ]}
+            >
               Well-being
             </Text>
           </Pressable>
-
         </View>
 
-        {/* Chat */}
         {messages.length > 0 && (
           <View style={styles.chatSection}>
-
             {messages.map((item, index) => (
               <View
                 key={index}
                 style={[
                   styles.messageBubble,
                   item.sender === 'user'
-                    ? styles.userBubble
-                    : styles.aiBubble,
+                    ? [
+                        styles.userBubble,
+                        { backgroundColor: theme.primary },
+                      ]
+                    : [
+                        styles.aiBubble,
+                        {
+                          backgroundColor: theme.card,
+                          borderColor: theme.border,
+                        },
+                      ],
                 ]}
               >
                 <Text
@@ -169,24 +244,35 @@ export default function AIBuddyScreen() {
                     styles.messageText,
                     item.sender === 'user'
                       ? styles.userText
-                      : styles.aiText,
+                      : [
+                          styles.aiText,
+                          { color: theme.heading },
+                        ],
                   ]}
                 >
                   {item.text}
                 </Text>
               </View>
             ))}
-
           </View>
         )}
 
-        {/* Input */}
-        <View style={styles.inputContainer}>
-
+        <View
+          style={[
+            styles.inputContainer,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
           <TextInput
-            style={styles.input}
+            style={[
+              styles.input,
+              { color: theme.heading },
+            ]}
             placeholder="Ask something..."
-            placeholderTextColor="#B69AA4"
+            placeholderTextColor={theme.text}
             value={message}
             onChangeText={setMessage}
             multiline
@@ -195,28 +281,37 @@ export default function AIBuddyScreen() {
           <Pressable
             style={[
               styles.sendButton,
-              !message.trim() && styles.disabledSend,
+              {
+                backgroundColor: message.trim()
+                  ? theme.primary
+                  : theme.border,
+              },
             ]}
             onPress={sendMessage}
             disabled={!message.trim()}
           >
-            <Text style={styles.sendText}>
-              ➤
-            </Text>
+            <Text style={styles.sendText}>➤</Text>
           </Pressable>
-
         </View>
 
-        {/* Disclaimer */}
-        <View style={styles.disclaimer}>
-          <Text style={styles.disclaimerText}>
+        <View
+          style={[
+            styles.disclaimer,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.disclaimerText,
+              { color: theme.text },
+            ]}
+          >
             💗 HerSphere provides general health information
             and is not a substitute for professional medical
             advice. If you have a serious or persistent concern,
             please consult a qualified healthcare professional.
           </Text>
         </View>
-
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -225,7 +320,6 @@ export default function AIBuddyScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -244,7 +338,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -257,7 +350,6 @@ const styles = StyleSheet.create({
     width: 58,
     height: 58,
     borderRadius: 29,
-    backgroundColor: '#F8DDE5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -274,17 +366,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 27,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   status: {
     fontSize: 12,
-    color: '#8A747B',
     marginTop: 3,
   },
 
   welcomeCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 25,
@@ -297,21 +386,18 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 9,
   },
 
   welcomeText: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#8A747B',
     marginTop: 7,
   },
 
   sectionTitle: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 28,
     marginBottom: 13,
   },
@@ -321,13 +407,11 @@ const styles = StyleSheet.create({
   },
 
   questionButton: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 17,
     padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   questionEmoji: {
@@ -338,7 +422,6 @@ const styles = StyleSheet.create({
   questionText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#7A4055',
   },
 
   chatSection: {
@@ -354,15 +437,12 @@ const styles = StyleSheet.create({
 
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: '#C96F89',
     borderBottomRightRadius: 5,
   },
 
   aiBubble: {
     alignSelf: 'flex-start',
-    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
     borderBottomLeftRadius: 5,
   },
 
@@ -375,19 +455,15 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 
-  aiText: {
-    color: '#7A4055',
-  },
+  aiText: {},
 
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    backgroundColor: '#FFFFFF',
     borderRadius: 22,
     padding: 7,
     marginTop: 22,
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   input: {
@@ -397,20 +473,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 13,
     paddingVertical: 10,
     fontSize: 14,
-    color: '#7A4055',
   },
 
   sendButton: {
     width: 42,
     height: 42,
     borderRadius: 21,
-    backgroundColor: '#C96F89',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  disabledSend: {
-    backgroundColor: '#DDB8C3',
   },
 
   sendText: {
@@ -419,7 +489,6 @@ const styles = StyleSheet.create({
   },
 
   disclaimer: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 18,
     padding: 15,
     marginTop: 18,
@@ -428,7 +497,6 @@ const styles = StyleSheet.create({
   disclaimerText: {
     fontSize: 11,
     lineHeight: 17,
-    color: '#8A747B',
     textAlign: 'center',
   },
 });

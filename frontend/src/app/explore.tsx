@@ -7,8 +7,11 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { useState } from 'react';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function ExploreScreen() {
+  const { theme } = useTheme();
+
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
 
   const moods = [
@@ -19,33 +22,71 @@ export default function ExploreScreen() {
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>
+            <Text
+              style={[
+                styles.greeting,
+                { color: theme.primary },
+              ]}
+            >
               Good morning 🌸
             </Text>
 
-            <Text style={styles.title}>
+            <Text
+              style={[
+                styles.title,
+                { color: theme.heading },
+              ]}
+            >
               Welcome to HerSphere
             </Text>
           </View>
 
-          <Pressable style={styles.profileCircle}>
-            <Text style={styles.profileEmoji}>🌷</Text>
+          <Pressable
+            style={[
+              styles.profileCircle,
+              { backgroundColor: theme.primaryLight },
+            ]}
+            onPress={() => router.push('/profile')}
+          >
+            <Text style={styles.profileEmoji}>
+              🌷
+            </Text>
           </Pressable>
         </View>
 
         {/* Daily Check-in */}
-        <View style={styles.checkInCard}>
-          <Text style={styles.checkInTitle}>
+        <View
+          style={[
+            styles.checkInCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.checkInTitle,
+              { color: theme.heading },
+            ]}
+          >
             How are you feeling today?
           </Text>
 
-          <Text style={styles.checkInSubtitle}>
+          <Text
+            style={[
+              styles.checkInSubtitle,
+              { color: theme.text },
+            ]}
+          >
             Take a moment to check in with yourself.
           </Text>
 
@@ -56,20 +97,36 @@ export default function ExploreScreen() {
                 onPress={() => setSelectedMood(mood.name)}
                 style={[
                   styles.moodButton,
-                  selectedMood === mood.name &&
-                    styles.selectedMood,
+                  {
+                    backgroundColor: theme.background,
+                    borderColor: 'transparent',
+                  },
+                  selectedMood === mood.name && {
+                    backgroundColor: theme.card,
+                    borderColor: theme.primary,
+                  },
                 ]}
               >
                 <Text style={styles.moodEmoji}>
                   {mood.emoji}
                 </Text>
 
-                <Text style={styles.moodText}>
+                <Text
+                  style={[
+                    styles.moodText,
+                    { color: theme.heading },
+                  ]}
+                >
                   {mood.name}
                 </Text>
 
                 {selectedMood === mood.name && (
-                  <Text style={styles.check}>
+                  <Text
+                    style={[
+                      styles.check,
+                      { color: theme.primary },
+                    ]}
+                  >
                     ✓
                   </Text>
                 )}
@@ -79,12 +136,24 @@ export default function ExploreScreen() {
 
           {/* Mood Summary */}
           {selectedMood && (
-            <View style={styles.moodSummary}>
+            <View
+              style={[
+                styles.moodSummary,
+                {
+                  backgroundColor: theme.card,
+                },
+              ]}
+            >
               <Text style={styles.summaryEmoji}>
                 🌷
               </Text>
 
-              <Text style={styles.summaryText}>
+              <Text
+                style={[
+                  styles.summaryText,
+                  { color: theme.heading },
+                ]}
+              >
                 You're feeling{' '}
                 <Text style={styles.bold}>
                   {selectedMood}
@@ -96,7 +165,12 @@ export default function ExploreScreen() {
         </View>
 
         {/* Wellness Features */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Your Wellness Space
         </Text>
 
@@ -104,80 +178,164 @@ export default function ExploreScreen() {
 
           {/* Menstrual Health */}
           <Pressable
-            style={styles.featureCard}
+            style={[
+              styles.featureCard,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() => router.push('/menstrual')}
           >
-            <View style={styles.iconCircle}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
               <Text style={styles.featureEmoji}>
                 🌸
               </Text>
             </View>
 
-            <Text style={styles.featureTitle}>
+            <Text
+              style={[
+                styles.featureTitle,
+                { color: theme.heading },
+              ]}
+            >
               Menstrual Health
             </Text>
 
-            <Text style={styles.featureDescription}>
+            <Text
+              style={[
+                styles.featureDescription,
+                { color: theme.text },
+              ]}
+            >
               Track and understand your cycle
             </Text>
           </Pressable>
 
           {/* Nutrition */}
           <Pressable
-            style={styles.featureCard}
+            style={[
+              styles.featureCard,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() => router.push('/nutrition')}
           >
-            <View style={styles.iconCircle}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
               <Text style={styles.featureEmoji}>
                 🥗
               </Text>
             </View>
 
-            <Text style={styles.featureTitle}>
+            <Text
+              style={[
+                styles.featureTitle,
+                { color: theme.heading },
+              ]}
+            >
               Smart Nutrition
             </Text>
 
-            <Text style={styles.featureDescription}>
+            <Text
+              style={[
+                styles.featureDescription,
+                { color: theme.text },
+              ]}
+            >
               Personalized food guidance
             </Text>
           </Pressable>
 
           {/* Emotional Well-being */}
           <Pressable
-            style={styles.featureCard}
+            style={[
+              styles.featureCard,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() => router.push('/wellbeing')}
           >
-            <View style={styles.iconCircle}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
               <Text style={styles.featureEmoji}>
                 💭
               </Text>
             </View>
 
-            <Text style={styles.featureTitle}>
+            <Text
+              style={[
+                styles.featureTitle,
+                { color: theme.heading },
+              ]}
+            >
               Well-being
             </Text>
 
-            <Text style={styles.featureDescription}>
+            <Text
+              style={[
+                styles.featureDescription,
+                { color: theme.text },
+              ]}
+            >
               Support your emotional health
             </Text>
           </Pressable>
 
           {/* AI Buddy */}
           <Pressable
-            style={styles.featureCard}
+            style={[
+              styles.featureCard,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             onPress={() => router.push('/ai-buddy')}
           >
-            <View style={styles.iconCircle}>
+            <View
+              style={[
+                styles.iconCircle,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
               <Text style={styles.featureEmoji}>
                 🤖
               </Text>
             </View>
 
-            <Text style={styles.featureTitle}>
+            <Text
+              style={[
+                styles.featureTitle,
+                { color: theme.heading },
+              ]}
+            >
               AI Health Buddy
             </Text>
 
-            <Text style={styles.featureDescription}>
+            <Text
+              style={[
+                styles.featureDescription,
+                { color: theme.text },
+              ]}
+            >
               Ask questions in a safe space
             </Text>
           </Pressable>
@@ -185,13 +343,24 @@ export default function ExploreScreen() {
         </View>
 
         {/* Explore */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Explore HerSphere
         </Text>
 
         {/* Myth vs Fact */}
         <Pressable
-          style={styles.wideCard}
+          style={[
+            styles.wideCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
           onPress={() => router.push('/myth-fact')}
         >
           <Text style={styles.wideEmoji}>
@@ -199,23 +368,44 @@ export default function ExploreScreen() {
           </Text>
 
           <View style={styles.wideContent}>
-            <Text style={styles.wideTitle}>
+            <Text
+              style={[
+                styles.wideTitle,
+                { color: theme.heading },
+              ]}
+            >
               Myth vs Fact
             </Text>
 
-            <Text style={styles.wideDescription}>
+            <Text
+              style={[
+                styles.wideDescription,
+                { color: theme.text },
+              ]}
+            >
               Learn what is true and what isn't.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
             ›
           </Text>
         </Pressable>
 
         {/* Doctor Guidance */}
         <Pressable
-          style={styles.wideCard}
+          style={[
+            styles.wideCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
           onPress={() => router.push('/doctor-guidance')}
         >
           <Text style={styles.wideEmoji}>
@@ -223,23 +413,44 @@ export default function ExploreScreen() {
           </Text>
 
           <View style={styles.wideContent}>
-            <Text style={styles.wideTitle}>
+            <Text
+              style={[
+                styles.wideTitle,
+                { color: theme.heading },
+              ]}
+            >
               Doctor Visit Guidance
             </Text>
 
-            <Text style={styles.wideDescription}>
+            <Text
+              style={[
+                styles.wideDescription,
+                { color: theme.text },
+              ]}
+            >
               Know when professional guidance may help.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
             ›
           </Text>
         </Pressable>
 
         {/* Sustainable Food */}
         <Pressable
-          style={styles.wideCard}
+          style={[
+            styles.wideCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
           onPress={() => router.push('/sustainable-food')}
         >
           <Text style={styles.wideEmoji}>
@@ -247,16 +458,31 @@ export default function ExploreScreen() {
           </Text>
 
           <View style={styles.wideContent}>
-            <Text style={styles.wideTitle}>
+            <Text
+              style={[
+                styles.wideTitle,
+                { color: theme.heading },
+              ]}
+            >
               Sustainable Food
             </Text>
 
-            <Text style={styles.wideDescription}>
+            <Text
+              style={[
+                styles.wideDescription,
+                { color: theme.text },
+              ]}
+            >
               Discover healthier and sustainable choices.
             </Text>
           </View>
 
-          <Text style={styles.arrow}>
+          <Text
+            style={[
+              styles.arrow,
+              { color: theme.primary },
+            ]}
+          >
             ›
           </Text>
         </Pressable>
@@ -269,7 +495,6 @@ export default function ExploreScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -290,13 +515,11 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#C96F89',
   },
 
   title: {
     fontSize: 26,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 5,
   },
 
@@ -304,7 +527,6 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: '#F8DDE5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -314,7 +536,6 @@ const styles = StyleSheet.create({
   },
 
   checkInCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -323,12 +544,10 @@ const styles = StyleSheet.create({
   checkInTitle: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   checkInSubtitle: {
     fontSize: 14,
-    color: '#8A747B',
     marginTop: 6,
   },
 
@@ -340,17 +559,10 @@ const styles = StyleSheet.create({
 
   moodButton: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
     borderRadius: 15,
     alignItems: 'center',
     paddingVertical: 11,
     borderWidth: 1,
-    borderColor: 'transparent',
-  },
-
-  selectedMood: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#C96F89',
   },
 
   moodEmoji: {
@@ -359,7 +571,6 @@ const styles = StyleSheet.create({
 
   moodText: {
     fontSize: 11,
-    color: '#7A4055',
     marginTop: 4,
     fontWeight: '600',
   },
@@ -370,11 +581,9 @@ const styles = StyleSheet.create({
     right: 6,
     fontSize: 13,
     fontWeight: '700',
-    color: '#C96F89',
   },
 
   moodSummary: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 16,
     padding: 12,
     marginTop: 12,
@@ -389,7 +598,6 @@ const styles = StyleSheet.create({
 
   summaryText: {
     fontSize: 12,
-    color: '#7A4055',
   },
 
   bold: {
@@ -399,7 +607,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 30,
     marginBottom: 14,
   },
@@ -413,18 +620,15 @@ const styles = StyleSheet.create({
   featureCard: {
     width: '48%',
     minHeight: 165,
-    backgroundColor: '#FFFFFF',
     borderRadius: 22,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   iconCircle: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#FFF0F3',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
@@ -437,25 +641,21 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   featureDescription: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#8A747B',
     marginTop: 6,
   },
 
   wideCard: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 18,
     padding: 17,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   wideEmoji: {
@@ -470,19 +670,16 @@ const styles = StyleSheet.create({
   wideTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   wideDescription: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#8A747B',
     marginTop: 3,
   },
 
   arrow: {
     fontSize: 27,
-    color: '#C96F89',
     marginLeft: 8,
   },
 });

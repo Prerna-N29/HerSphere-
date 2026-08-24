@@ -56,6 +56,7 @@ export default function SignupScreen() {
           name: name.trim(),
           email: email.trim().toLowerCase(),
           password: password,
+          
         }),
       });
 

@@ -6,41 +6,55 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
+import { themes } from '../theme/themes';
 
 export default function CycleNutritionScreen() {
+  const { themeName } = useTheme();
+  const theme = themes[themeName];
+
   const phases = [
     {
       emoji: '🩸',
       title: 'During Your Period',
       description:
         'Focus on nourishing meals and foods containing iron, protein and fibre. Staying hydrated can also help you feel your best.',
-      foods: 'Dal, beans, leafy greens, eggs, fruits and whole grains',
+      foods:
+        'Dal, beans, leafy greens, eggs, fruits and whole grains',
     },
     {
       emoji: '🌱',
       title: 'Follicular Phase',
       description:
         'As your body moves through this phase, aim for a varied diet with plenty of vegetables, fruits, whole grains and protein.',
-      foods: 'Vegetables, fruits, pulses, oats, rice and nuts',
+      foods:
+        'Vegetables, fruits, pulses, oats, rice and nuts',
     },
     {
       emoji: '🥚',
       title: 'Around Ovulation',
       description:
         'A balanced eating pattern with colourful vegetables, fruits, protein and healthy fats can support overall wellbeing.',
-      foods: 'Fruits, vegetables, eggs, fish, seeds and pulses',
+      foods:
+        'Fruits, vegetables, eggs, fish, seeds and pulses',
     },
     {
       emoji: '🌙',
       title: 'Luteal Phase',
       description:
         'Some people notice changes in appetite or cravings during this phase. Regular balanced meals can help maintain steady energy.',
-      foods: 'Whole grains, nuts, seeds, vegetables and protein-rich foods',
+      foods:
+        'Whole grains, nuts, seeds, vegetables and protein-rich foods',
     },
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
         {/* Back */}
@@ -48,33 +62,65 @@ export default function CycleNutritionScreen() {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
         {/* Header */}
         <Text style={styles.emoji}>🩸</Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Nutrition During Your Cycle
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           Your nutritional needs don't follow a perfect
           schedule. Learn how balanced food choices can
           support you throughout your cycle.
         </Text>
 
         {/* Intro */}
-        <View style={styles.introCard}>
+        <View
+          style={[
+            styles.introCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
           <Text style={styles.introEmoji}>
             🌷
           </Text>
 
-          <Text style={styles.introTitle}>
+          <Text
+            style={[
+              styles.introTitle,
+              { color: theme.heading },
+            ]}
+          >
             Listen to your body
           </Text>
 
-          <Text style={styles.introText}>
+          <Text
+            style={[
+              styles.introText,
+              { color: theme.text },
+            ]}
+          >
             There is no single diet that everyone needs to
             follow during their menstrual cycle. Your appetite,
             energy and preferences can change, and that's okay.
@@ -82,48 +128,99 @@ export default function CycleNutritionScreen() {
         </View>
 
         {/* Phases */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Cycle & Nutrition
         </Text>
 
         {phases.map((phase) => (
           <View
             key={phase.title}
-            style={styles.phaseCard}
+            style={[
+              styles.phaseCard,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
           >
             <View style={styles.phaseHeader}>
               <Text style={styles.phaseEmoji}>
                 {phase.emoji}
               </Text>
 
-              <Text style={styles.phaseTitle}>
+              <Text
+                style={[
+                  styles.phaseTitle,
+                  { color: theme.heading },
+                ]}
+              >
                 {phase.title}
               </Text>
             </View>
 
-            <Text style={styles.phaseDescription}>
+            <Text
+              style={[
+                styles.phaseDescription,
+                { color: theme.text },
+              ]}
+            >
               {phase.description}
             </Text>
 
-            <View style={styles.foodBox}>
-              <Text style={styles.foodLabel}>
+            <View
+              style={[
+                styles.foodBox,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.foodLabel,
+                  { color: theme.primary },
+                ]}
+              >
                 🌿 FOOD IDEAS
               </Text>
 
-              <Text style={styles.foodText}>
+              <Text
+                style={[
+                  styles.foodText,
+                  { color: theme.heading },
+                ]}
+              >
                 {phase.foods}
               </Text>
             </View>
           </View>
         ))}
 
-        {/* Important note */}
-        <View style={styles.note}>
-          <Text style={styles.noteTitle}>
+        {/* Important Note */}
+        <View
+          style={[
+            styles.note,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.noteTitle,
+              { color: theme.heading },
+            ]}
+          >
             💗 Remember
           </Text>
 
-          <Text style={styles.noteText}>
+          <Text
+            style={[
+              styles.noteText,
+              { color: theme.text },
+            ]}
+          >
             You don't need to completely change your diet
             based on your cycle. A varied, balanced eating
             pattern over time matters more than following
@@ -139,7 +236,6 @@ export default function CycleNutritionScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -158,7 +254,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -169,19 +264,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   introCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -194,32 +286,27 @@ const styles = StyleSheet.create({
   introTitle: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 9,
   },
 
   introText: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#8A747B',
     marginTop: 7,
   },
 
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 30,
     marginBottom: 14,
   },
 
   phaseCard: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 20,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   phaseHeader: {
@@ -236,18 +323,15 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   phaseDescription: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#8A747B',
     marginTop: 12,
   },
 
   foodBox: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 15,
     padding: 14,
     marginTop: 14,
@@ -257,18 +341,15 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 1,
-    color: '#C96F89',
   },
 
   foodText: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#7A4055',
     marginTop: 5,
   },
 
   note: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
     marginTop: 8,
@@ -277,13 +358,11 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   noteText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 });

@@ -6,10 +6,18 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function SustainableFoodScreen() {
+  const { theme } = useTheme();
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
         {/* Back */}
@@ -17,32 +25,66 @@ export default function SustainableFoodScreen() {
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
         {/* Header */}
-        <Text style={styles.emoji}>🌱</Text>
+        <Text style={styles.emoji}>
+          🌱
+        </Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Sustainable Food Choices
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           Discover food choices that can support your
           wellbeing while being kinder to the environment.
         </Text>
 
         {/* Highlight */}
-        <View style={styles.highlightCard}>
+        <View
+          style={[
+            styles.highlightCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
           <Text style={styles.highlightEmoji}>
             🌍
           </Text>
 
-          <Text style={styles.highlightTitle}>
+          <Text
+            style={[
+              styles.highlightTitle,
+              { color: theme.heading },
+            ]}
+          >
             Small choices can make a difference
           </Text>
 
-          <Text style={styles.highlightText}>
+          <Text
+            style={[
+              styles.highlightText,
+              { color: theme.text },
+            ]}
+          >
             Sustainable eating is not about following a
             perfect diet. It is about making thoughtful
             choices that work for your health, budget,
@@ -51,20 +93,45 @@ export default function SustainableFoodScreen() {
         </View>
 
         {/* Explore */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Simple Sustainable Choices
         </Text>
 
         {/* Seasonal & Local */}
-        <View style={styles.card}>
-          <Text style={styles.cardEmoji}>🥕</Text>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.cardEmoji}>
+            🥕
+          </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Choose seasonal & local foods
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Seasonal fruits and vegetables can be a
               fresh and practical choice. Local foods may
               also reduce the distance food travels.
@@ -73,15 +140,35 @@ export default function SustainableFoodScreen() {
         </View>
 
         {/* Plant Protein */}
-        <View style={styles.card}>
-          <Text style={styles.cardEmoji}>🫘</Text>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.cardEmoji}>
+            🫘
+          </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Include plant-based proteins
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Pulses, beans, lentils, peas, nuts and seeds
               can provide useful sources of protein and
               other nutrients.
@@ -90,15 +177,35 @@ export default function SustainableFoodScreen() {
         </View>
 
         {/* Whole Foods */}
-        <View style={styles.card}>
-          <Text style={styles.cardEmoji}>🌾</Text>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.cardEmoji}>
+            🌾
+          </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Prefer nourishing whole foods
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Foods such as whole grains, vegetables,
               fruits, pulses and nuts can add variety
               and nourishment to everyday meals.
@@ -107,15 +214,35 @@ export default function SustainableFoodScreen() {
         </View>
 
         {/* Reduce Waste */}
-        <View style={styles.card}>
-          <Text style={styles.cardEmoji}>♻️</Text>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={styles.cardEmoji}>
+            ♻️
+          </Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Reduce food waste
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Planning meals, storing food properly and
               using leftovers creatively can help reduce
               unnecessary food waste.
@@ -124,35 +251,80 @@ export default function SustainableFoodScreen() {
         </View>
 
         {/* Practical Ideas */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Easy Ideas
         </Text>
 
-        <View style={styles.ideaCard}>
-          <Text style={styles.idea}>
+        <View
+          style={[
+            styles.ideaCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.idea,
+              { color: theme.heading },
+            ]}
+          >
             🌿 Add one seasonal fruit to your day
           </Text>
 
-          <Text style={styles.idea}>
+          <Text
+            style={[
+              styles.idea,
+              { color: theme.heading },
+            ]}
+          >
             🫘 Include pulses or beans in regular meals
           </Text>
 
-          <Text style={styles.idea}>
+          <Text
+            style={[
+              styles.idea,
+              { color: theme.heading },
+            ]}
+          >
             🥕 Buy only what you are likely to use
           </Text>
 
-          <Text style={styles.idea}>
+          <Text
+            style={[
+              styles.idea,
+              { color: theme.heading },
+            ]}
+          >
             ♻️ Turn suitable leftovers into another meal
           </Text>
         </View>
 
         {/* Reminder */}
-        <View style={styles.note}>
-          <Text style={styles.noteTitle}>
+        <View
+          style={[
+            styles.note,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.noteTitle,
+              { color: theme.heading },
+            ]}
+          >
             💗 Sustainability without pressure
           </Text>
 
-          <Text style={styles.noteText}>
+          <Text
+            style={[
+              styles.noteText,
+              { color: theme.text },
+            ]}
+          >
             You do not need to completely change the way
             you eat. Even small, realistic choices can
             contribute to healthier and more sustainable
@@ -168,7 +340,6 @@ export default function SustainableFoodScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -187,7 +358,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -198,19 +368,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 31,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   highlightCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -223,34 +390,29 @@ const styles = StyleSheet.create({
   highlightTitle: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 10,
   },
 
   highlightText: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#8A747B',
     marginTop: 7,
   },
 
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 30,
     marginBottom: 14,
   },
 
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 18,
     padding: 17,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   cardEmoji: {
@@ -265,18 +427,15 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   cardText: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#8A747B',
     marginTop: 5,
   },
 
   ideaCard: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
   },
@@ -284,12 +443,10 @@ const styles = StyleSheet.create({
   idea: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#7A4055',
     marginBottom: 10,
   },
 
   note: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 20,
     padding: 18,
     marginTop: 18,
@@ -298,13 +455,11 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   noteText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 });

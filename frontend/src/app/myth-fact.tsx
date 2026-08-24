@@ -7,8 +7,11 @@ import {
   Pressable,
 } from 'react-native';
 import { router } from 'expo-router';
+import { useTheme } from '../theme/ThemeContext';
 
 export default function MythFactScreen() {
+  const { theme } = useTheme();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
 
@@ -44,48 +47,91 @@ export default function MythFactScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
 
-        {/* Back */}
         <Pressable
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
-        {/* Header */}
         <Text style={styles.emoji}>❓</Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Myth vs Fact
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           Let's separate common menstrual health myths
           from evidence-based information.
         </Text>
 
-        {/* Progress */}
-        <Text style={styles.progress}>
+        <Text
+          style={[
+            styles.progress,
+            { color: theme.primary },
+          ]}
+        >
           {currentIndex + 1} of {myths.length}
         </Text>
 
-        {/* Myth Card */}
-        <View style={styles.card}>
-
-          <Text style={styles.label}>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.label,
+              { color: theme.primary },
+            ]}
+          >
             MYTH
           </Text>
 
-          <Text style={styles.mythText}>
+          <Text
+            style={[
+              styles.mythText,
+              { color: theme.heading },
+            ]}
+          >
             “{currentMyth.myth}”
           </Text>
 
           {!revealed ? (
             <Pressable
-              style={styles.revealButton}
+              style={[
+                styles.revealButton,
+                { backgroundColor: theme.primary },
+              ]}
               onPress={() => setRevealed(true)}
             >
               <Text style={styles.revealText}>
@@ -93,40 +139,73 @@ export default function MythFactScreen() {
               </Text>
             </Pressable>
           ) : (
-            <View style={styles.factBox}>
-
-              <Text style={styles.factLabel}>
+            <View
+              style={[
+                styles.factBox,
+                { backgroundColor: theme.primaryLight },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.factLabel,
+                  { color: theme.primary },
+                ]}
+              >
                 🌷 FACT
               </Text>
 
-              <Text style={styles.factText}>
+              <Text
+                style={[
+                  styles.factText,
+                  { color: theme.heading },
+                ]}
+              >
                 {currentMyth.fact}
               </Text>
-
             </View>
           )}
-
         </View>
 
-        {/* Next */}
         {revealed && (
           <Pressable
-            style={styles.nextButton}
+            style={[
+              styles.nextButton,
+              { backgroundColor: theme.primaryLight },
+            ]}
             onPress={nextMyth}
           >
-            <Text style={styles.nextText}>
+            <Text
+              style={[
+                styles.nextText,
+                { color: theme.heading },
+              ]}
+            >
               Next Myth →
             </Text>
           </Pressable>
         )}
 
-        {/* Reminder */}
-        <View style={styles.note}>
-          <Text style={styles.noteTitle}>
+        <View
+          style={[
+            styles.note,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.noteTitle,
+              { color: theme.heading },
+            ]}
+          >
             💗 Remember
           </Text>
 
-          <Text style={styles.noteText}>
+          <Text
+            style={[
+              styles.noteText,
+              { color: theme.text },
+            ]}
+          >
             Menstrual health information can vary depending
             on individual circumstances. When something
             concerns you, a qualified healthcare professional
@@ -142,7 +221,6 @@ export default function MythFactScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -161,7 +239,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -172,50 +249,42 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   progress: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#C96F89',
     marginTop: 20,
   },
 
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 24,
     padding: 24,
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   label: {
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 1.5,
-    color: '#C96F89',
   },
 
   mythText: {
     fontSize: 21,
     lineHeight: 30,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 14,
   },
 
   revealButton: {
-    backgroundColor: '#C96F89',
     paddingVertical: 14,
     borderRadius: 28,
     alignItems: 'center',
@@ -229,7 +298,6 @@ const styles = StyleSheet.create({
   },
 
   factBox: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 18,
     padding: 18,
     marginTop: 22,
@@ -238,18 +306,15 @@ const styles = StyleSheet.create({
   factLabel: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#C96F89',
   },
 
   factText: {
     fontSize: 14,
     lineHeight: 22,
-    color: '#7A4055',
     marginTop: 8,
   },
 
   nextButton: {
-    backgroundColor: '#F8DDE5',
     paddingVertical: 15,
     borderRadius: 28,
     alignItems: 'center',
@@ -257,13 +322,11 @@ const styles = StyleSheet.create({
   },
 
   nextText: {
-    color: '#7A4055',
     fontSize: 15,
     fontWeight: '700',
   },
 
   note: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
     marginTop: 25,
@@ -272,13 +335,11 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   noteText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 });

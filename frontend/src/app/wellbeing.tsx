@@ -7,8 +7,13 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { useState } from 'react';
+import { useTheme } from '../theme/ThemeContext';
+import { themes } from '../theme/themes';
 
 export default function WellbeingScreen() {
+  const { themeName } = useTheme();
+  const theme = themes[themeName];
+
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
 
   const moods = [
@@ -19,73 +24,132 @@ export default function WellbeingScreen() {
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={[
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.content}>
-
-        {/* Back */}
         <Pressable
           onPress={() => router.back()}
           style={styles.backButton}
         >
-          <Text style={styles.back}>‹ Back</Text>
+          <Text
+            style={[
+              styles.back,
+              { color: theme.primary },
+            ]}
+          >
+            ‹ Back
+          </Text>
         </Pressable>
 
-        {/* Header */}
         <Text style={styles.emoji}>💭</Text>
 
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: theme.heading },
+          ]}
+        >
           Emotional Well-being
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.text },
+          ]}
+        >
           Take a moment to check in with yourself and
           explore simple ways to support your emotional
           well-being.
         </Text>
 
-        {/* Highlight */}
-        <View style={styles.highlightCard}>
-          <Text style={styles.highlightEmoji}>
-            🌷
-          </Text>
+        <View
+          style={[
+            styles.highlightCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text style={styles.highlightEmoji}>🌷</Text>
 
-          <Text style={styles.highlightTitle}>
+          <Text
+            style={[
+              styles.highlightTitle,
+              { color: theme.heading },
+            ]}
+          >
             Your feelings matter
           </Text>
 
-          <Text style={styles.highlightText}>
+          <Text
+            style={[
+              styles.highlightText,
+              { color: theme.text },
+            ]}
+          >
             There is no right or wrong way to feel. Making
             space for your emotions and understanding your
             needs can be an important part of wellbeing.
           </Text>
         </View>
 
-        {/* Mood Check-in */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           How are you feeling today?
         </Text>
 
-        <View style={styles.moodCard}>
+        <View
+          style={[
+            styles.moodCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
           {moods.map((mood) => (
             <Pressable
               key={mood.name}
               onPress={() => setSelectedMood(mood.name)}
               style={[
                 styles.moodOption,
-                selectedMood === mood.name &&
-                  styles.selectedMood,
+                {
+                  backgroundColor: theme.primaryLight,
+                  borderColor: 'transparent',
+                },
+                selectedMood === mood.name && {
+                  backgroundColor: theme.primaryLight,
+                  borderColor: theme.primary,
+                },
               ]}
             >
               <Text style={styles.moodEmoji}>
                 {mood.emoji}
               </Text>
 
-              <Text style={styles.moodText}>
+              <Text
+                style={[
+                  styles.moodText,
+                  { color: theme.heading },
+                ]}
+              >
                 {mood.name}
               </Text>
 
               {selectedMood === mood.name && (
-                <Text style={styles.check}>
+                <Text
+                  style={[
+                    styles.check,
+                    { color: theme.primary },
+                  ]}
+                >
                   ✓
                 </Text>
               )}
@@ -93,34 +157,68 @@ export default function WellbeingScreen() {
           ))}
         </View>
 
-        {/* Selected Mood */}
         {selectedMood && (
-          <View style={styles.moodSummary}>
+          <View
+            style={[
+              styles.moodSummary,
+              { backgroundColor: theme.primaryLight },
+            ]}
+          >
             <Text style={styles.moodSummaryEmoji}>
               🌷
             </Text>
 
-            <Text style={styles.moodSummaryText}>
-              You're feeling <Text style={styles.bold}>{selectedMood}</Text> today.
+            <Text
+              style={[
+                styles.moodSummaryText,
+                { color: theme.heading },
+              ]}
+            >
+              You're feeling{' '}
+              <Text style={styles.bold}>
+                {selectedMood}
+              </Text>{' '}
+              today.
             </Text>
           </View>
         )}
 
-        {/* Wellbeing Areas */}
-        <Text style={styles.sectionTitle}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            { color: theme.heading },
+          ]}
+        >
           Explore Well-being
         </Text>
 
-        {/* Self Care */}
-        <View style={styles.card}>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
           <Text style={styles.cardEmoji}>🌸</Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Small acts of self-care
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Rest, take a short walk, listen to music,
               spend time with someone you trust, or simply
               give yourself some quiet time.
@@ -128,16 +226,33 @@ export default function WellbeingScreen() {
           </View>
         </View>
 
-        {/* Breathing */}
-        <View style={styles.card}>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
           <Text style={styles.cardEmoji}>🧘</Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Take a calming moment
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Slow breathing, stretching or taking a short
               break can help you pause and reconnect with
               yourself.
@@ -145,16 +260,33 @@ export default function WellbeingScreen() {
           </View>
         </View>
 
-        {/* Journal */}
-        <View style={styles.card}>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
           <Text style={styles.cardEmoji}>📝</Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Write it down
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Writing about your thoughts or emotions can
               help you notice patterns and understand what
               you may need.
@@ -162,16 +294,33 @@ export default function WellbeingScreen() {
           </View>
         </View>
 
-        {/* Connection */}
-        <View style={styles.card}>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
+          ]}
+        >
           <Text style={styles.cardEmoji}>💗</Text>
 
           <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>
+            <Text
+              style={[
+                styles.cardTitle,
+                { color: theme.heading },
+              ]}
+            >
               Stay connected
             </Text>
 
-            <Text style={styles.cardText}>
+            <Text
+              style={[
+                styles.cardText,
+                { color: theme.text },
+              ]}
+            >
               Talking with a trusted friend, family member
               or another supportive person can make difficult
               moments feel less overwhelming.
@@ -179,13 +328,27 @@ export default function WellbeingScreen() {
           </View>
         </View>
 
-        {/* Gentle Reminder */}
-        <View style={styles.note}>
-          <Text style={styles.noteTitle}>
+        <View
+          style={[
+            styles.note,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.noteTitle,
+              { color: theme.heading },
+            ]}
+          >
             🌷 Be gentle with yourself
           </Text>
 
-          <Text style={styles.noteText}>
+          <Text
+            style={[
+              styles.noteText,
+              { color: theme.text },
+            ]}
+          >
             You do not have to feel positive all the time.
             Looking after your emotional wellbeing can start
             with something as simple as acknowledging how
@@ -193,20 +356,33 @@ export default function WellbeingScreen() {
           </Text>
         </View>
 
-        {/* Professional Support */}
-        <View style={styles.supportCard}>
-          <Text style={styles.supportTitle}>
+        <View
+          style={[
+            styles.supportCard,
+            { backgroundColor: theme.primaryLight },
+          ]}
+        >
+          <Text
+            style={[
+              styles.supportTitle,
+              { color: theme.heading },
+            ]}
+          >
             🩺 When extra support may help
           </Text>
 
-          <Text style={styles.supportText}>
+          <Text
+            style={[
+              styles.supportText,
+              { color: theme.text },
+            ]}
+          >
             If difficult feelings are persistent, become
             overwhelming, or start affecting your everyday
             life, consider talking to a qualified mental
             health professional or another trusted adult.
           </Text>
         </View>
-
       </View>
     </ScrollView>
   );
@@ -215,7 +391,6 @@ export default function WellbeingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F8',
   },
 
   content: {
@@ -234,7 +409,6 @@ const styles = StyleSheet.create({
 
   back: {
     fontSize: 17,
-    color: '#C96F89',
     fontWeight: '600',
   },
 
@@ -245,19 +419,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 31,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 8,
   },
 
   subtitle: {
     fontSize: 15,
     lineHeight: 23,
-    color: '#8A747B',
     marginTop: 10,
   },
 
   highlightCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 24,
     padding: 22,
     marginTop: 28,
@@ -270,48 +441,36 @@ const styles = StyleSheet.create({
   highlightTitle: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 10,
   },
 
   highlightText: {
     fontSize: 13,
     lineHeight: 21,
-    color: '#8A747B',
     marginTop: 7,
   },
 
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#7A4055',
     marginTop: 30,
     marginBottom: 14,
   },
 
   moodCard: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 20,
     padding: 14,
     flexDirection: 'row',
     gap: 8,
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   moodOption: {
     flex: 1,
-    backgroundColor: '#FFF0F3',
     borderRadius: 15,
     alignItems: 'center',
     paddingVertical: 12,
     borderWidth: 1,
-    borderColor: 'transparent',
-  },
-
-  selectedMood: {
-    backgroundColor: '#F8DDE5',
-    borderColor: '#C96F89',
   },
 
   moodEmoji: {
@@ -320,7 +479,6 @@ const styles = StyleSheet.create({
 
   moodText: {
     fontSize: 11,
-    color: '#7A4055',
     marginTop: 4,
     fontWeight: '600',
   },
@@ -331,11 +489,9 @@ const styles = StyleSheet.create({
     right: 7,
     fontSize: 13,
     fontWeight: '700',
-    color: '#C96F89',
   },
 
   moodSummary: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 18,
     padding: 15,
     marginTop: 12,
@@ -350,7 +506,6 @@ const styles = StyleSheet.create({
 
   moodSummaryText: {
     fontSize: 13,
-    color: '#7A4055',
   },
 
   bold: {
@@ -358,14 +513,12 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 18,
     padding: 17,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderWidth: 1,
-    borderColor: '#F3DDE3',
   },
 
   cardEmoji: {
@@ -380,18 +533,15 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   cardText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 5,
   },
 
   note: {
-    backgroundColor: '#FFF0F3',
     borderRadius: 20,
     padding: 18,
     marginTop: 8,
@@ -400,18 +550,15 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   noteText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 
   supportCard: {
-    backgroundColor: '#F8DDE5',
     borderRadius: 20,
     padding: 18,
     marginTop: 16,
@@ -420,13 +567,11 @@ const styles = StyleSheet.create({
   supportTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#7A4055',
   },
 
   supportText: {
     fontSize: 12,
     lineHeight: 19,
-    color: '#8A747B',
     marginTop: 7,
   },
 });
