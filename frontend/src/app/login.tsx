@@ -11,9 +11,11 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { useTheme } from '../theme/ThemeContext';
+import { useUser } from '../context/UserContext';
 
 export default function LoginScreen() {
   const { theme } = useTheme();
+  const { setUser } = useUser();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -179,6 +181,12 @@ export default function LoginScreen() {
                   'Login successful:',
                   data
                 );
+
+                await setUser({
+                  userId: data.userId,
+                  name: data.name,
+                  email: data.email,
+                });
 
                 router.replace('/explore');
               } catch (error) {

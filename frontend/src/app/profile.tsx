@@ -1,24 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { useTheme } from '../theme/ThemeContext';
+import { useUser } from '../context/UserContext';
 
 export default function ProfileScreen() {
   const { theme } = useTheme();
+  const { user } = useUser();
 
   const [selected, setSelected] = useState<string[]>([]);
-  const [apiMessage, setApiMessage] = useState('');
-
-  useEffect(() => {
-    fetch('https://hersphere-api.onrender.com/hello')
-      .then((response) => response.text())
-      .then((data) => setApiMessage(data))
-      .catch((error) => console.error('API Error:', error));
-  }, []);
 
   const toggleOption = (option: string) => {
     if (selected.includes(option)) {
-      setSelected(selected.filter((item) => item !== option));
+      setSelected(
+        selected.filter((item) => item !== option)
+      );
     } else {
       setSelected([...selected, option]);
     }
@@ -59,15 +55,34 @@ export default function ProfileScreen() {
         more relevant to you.
       </Text>
 
-      {apiMessage !== '' && (
-        <Text
+      {user && (
+        <View
           style={[
-            styles.apiMessage,
-            { color: theme.primary },
+            styles.userCard,
+            {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+            },
           ]}
         >
-          {apiMessage}
-        </Text>
+          <Text
+            style={[
+              styles.userGreeting,
+              { color: theme.heading },
+            ]}
+          >
+            Welcome, {user.name} 🌸
+          </Text>
+
+          <Text
+            style={[
+              styles.userEmail,
+              { color: theme.text },
+            ]}
+          >
+            {user.email}
+          </Text>
+        </View>
       )}
 
       <View
@@ -97,7 +112,9 @@ export default function ProfileScreen() {
               borderColor: theme.primary,
             },
           ]}
-          onPress={() => toggleOption('Menstrual Health')}
+          onPress={() =>
+            toggleOption('Menstrual Health')
+          }
         >
           <Text
             style={[
@@ -132,7 +149,9 @@ export default function ProfileScreen() {
               borderColor: theme.primary,
             },
           ]}
-          onPress={() => toggleOption('Nutrition & Food')}
+          onPress={() =>
+            toggleOption('Nutrition & Food')
+          }
         >
           <Text
             style={[
@@ -167,7 +186,9 @@ export default function ProfileScreen() {
               borderColor: theme.primary,
             },
           ]}
-          onPress={() => toggleOption('Emotional Well-being')}
+          onPress={() =>
+            toggleOption('Emotional Well-being')
+          }
         >
           <Text
             style={[
@@ -202,7 +223,9 @@ export default function ProfileScreen() {
               borderColor: theme.primary,
             },
           ]}
-          onPress={() => toggleOption('Healthy Lifestyle')}
+          onPress={() =>
+            toggleOption('Healthy Lifestyle')
+          }
         >
           <Text
             style={[
@@ -273,16 +296,27 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
 
-  apiMessage: {
-    fontSize: 14,
-    marginTop: 10,
-    fontWeight: '600',
+  userCard: {
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 16,
+    marginTop: 20,
+  },
+
+  userGreeting: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
+  userEmail: {
+    fontSize: 13,
+    marginTop: 4,
   },
 
   card: {
     borderRadius: 22,
     padding: 22,
-    marginTop: 32,
+    marginTop: 24,
   },
 
   cardTitle: {
@@ -315,7 +349,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 30,
     alignItems: 'center',
-    marginTop: 32,
+    marginTop: 28,
   },
 
   buttonText: {

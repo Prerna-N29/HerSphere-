@@ -13,7 +13,7 @@ import {
 import { router } from 'expo-router';
 import { useTheme } from '../theme/ThemeContext';
 
-const API_URL = 'https://hersphere-api.onrender.com';
+const API_URL = 'http://localhost:8080';
 
 export default function SignupScreen() {
   const { theme } = useTheme();
@@ -56,15 +56,20 @@ export default function SignupScreen() {
           name: name.trim(),
           email: email.trim().toLowerCase(),
           password: password,
-          
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
-      }
+      const responseText = await response.text();
 
-      await response.json();
+      console.log('Signup status:', response.status);
+      console.log('Signup response:', responseText);
+
+      if (!response.ok) {
+        setMessage(
+          `Signup failed (${response.status}): ${responseText}`
+        );
+        return;
+      }
 
       setMessage('Account created successfully! 🌸');
 
@@ -73,8 +78,11 @@ export default function SignupScreen() {
       }, 1200);
     } catch (error) {
       console.error('Signup error:', error);
+
       setMessage(
-        'Unable to create your account. Please try again.'
+        error instanceof Error
+          ? error.message
+          : 'Unable to connect to HerSphere.'
       );
     } finally {
       setLoading(false);
@@ -242,7 +250,10 @@ export default function SignupScreen() {
           <Pressable
             style={[
               styles.signupButton,
-              { backgroundColor: theme.primary },
+              {
+                backgroundColor: theme.primary,
+                opacity: loading ? 0.6 : 1,
+              },
             ]}
             onPress={handleSignup}
             disabled={loading}
